@@ -6162,7 +6162,8 @@ small.value {
 }
 .header-top .search-widget form input[type=text] {
     min-width: inherit;
-    width: 100%
+    width: 100%;
+    margin-top: 10px;
 }
 #checkout #search_widget {
     display: none
@@ -6174,6 +6175,9 @@ small.value {
     .header-top .search-widget {
         float: none;
         padding: 0 .9375rem
+    }
+    .header-top .search-widget button[type=submit] {
+        color : #333;
     }
     .header-top .search-widget form {
         margin: 0 auto
@@ -6263,8 +6267,15 @@ small.value {
 }
 #mobile_top_menu_wrapper {
     margin-top: 0px;
-    padding-bottom: 20px;
-    background: #fff
+    background: #fff;
+    transition: all 1.5s ease-in-out;
+    -webkit-transition: all 1.5s ease-in-out;
+    display: block !important;
+    max-height: 0;
+    overflow: hidden;
+}
+#mobile_top_menu_wrapper.active {
+    max-height: 1200px;
 }
 #mobile_top_menu_wrapper #top-menu {
     margin-bottom: .625rem;
@@ -7934,7 +7945,7 @@ body#checkout #footer {
     text-decoration: none
 }
 .active_filters {
-    background: #f79c17;
+    background: #00833d;
     padding: 15px 20px 5px;
     margin-bottom: 30px;
 }
@@ -8640,12 +8651,16 @@ li.product-flag {
   background: #00833d none repeat scroll 0 0;
   border-radius: 100%;
   color: #fff;
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  line-height: 15px;
   font-weight: 700;
   height: 50px;
   margin-left: 0.65625rem;
   margin-top: 0.625rem;
-  padding: 12px 6px;
+  padding: 0 !important;
   position: absolute;
   text-transform: uppercase;
   width: 50px;
@@ -8670,7 +8685,64 @@ li.product-flag.on-sale {
     text-align: center;
     margin: 0;
     left: 0;
-    top: 0
+    top: 0;
+}
+
+#content-wrapper .page-content li.product-flag.on-sale {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    background: none;
+}
+
+#content-wrapper .page-content li.product-flag.on-sale:after {
+    content: '';
+    position: absolute;
+    border-left: 85px solid #000138;
+    border-bottom: 85px solid transparent;
+    position: absolute;
+    left: -33px;
+    top: -6px;
+    transform: rotate(45deg) translateX(22px);
+    -webkit-transform: rotate(45deg) translateX(22px);
+    z-index: -1;
+}
+
+#content-wrapper .page-content li.product-flag.new {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    background: none;
+    right: 0;
+    top: 0 !important;
+    left: auto;
+    justify-content: unset;
+}
+
+#content-wrapper .page-content  li.product-flag.new:after {
+   content: '';
+    position: absolute;
+    border-right: 85px solid #00833d;
+    border-bottom: 85px solid transparent;
+    position: absolute;
+    top: -22px;
+    transform: rotate(-45deg) translateY(12px);
+    -webkit-transform: rotate(-45deg) translateX(-34px);
+    z-index: -1;
+}
+@media (max-width:640px) {
+    #content-wrapper .page-content {
+        overflow: hidden;
+    }
+    #content-wrapper .page-content  li.product-flag.new:after {
+        right: 0;
+        top: 0;
+        -webkit-transform: rotate(-45deg) translateY(14px) translateX(8px);
+         transform: rotate(-45deg) translateY(14px) translateX(8px);
+    }
+    #content-wrapper .page-content li.product-flag.on-sale:after {
+        -webkit-transform: rotate(45deg) translateX(22px) translateY(7px);
+        transform: rotate(45deg) translateX(22px) translateY(7px);
+        top: -10px;
+    }
 }
 .product-customization {
     box-shadow: 2px 2px 11px 0 rgba(0, 0, 0, .1);
@@ -9738,6 +9810,7 @@ li.product-flag.on-sale {
 #header .header-top {
     text-align: center;
     border-top: 1px solid #8181812b;
+    border-bottom: 1px solid #8181812b;
 }
 #header .header-top>.container {
     position: relative
@@ -9767,6 +9840,7 @@ li.product-flag.on-sale {
 #wrapper {
     background: #fff;
     padding-top: 60px;
+    display: block !important;
 }
 #wrapper .banner {
     margin-bottom: 1.5rem;
@@ -9832,6 +9906,7 @@ li.product-flag.on-sale {
     }
     #wrapper {
         box-shadow: none;
+        margin-top: 15px;
     }
     .thumbnail-container .product-description {
         padding-bottom: 0 !important;
@@ -9844,12 +9919,16 @@ li.product-flag.on-sale {
     #header {
         background: #ebebeb
     }
+    #header a {
+        position: static;
+    }
+    #header .logo {
+        width:70px;
+    }
     #header .header-nav {
         background: #fff;
-        padding: 15px 0px;
     }
     #header .header-nav .top-logo {
-      float: left;
       line-height: 50px;
       margin: 0 auto;
       padding-left: 10px;
@@ -9926,7 +10005,7 @@ li.product-flag.on-sale {
         padding: 10px 15px 0px;
     }
     #header .logo {
-        width: auto
+        position: static;
     }
     #products .product-miniature,
     .featured-products .product-miniature {

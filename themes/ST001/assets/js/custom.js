@@ -27,7 +27,7 @@
 					autoplay: false,
 					responsive:{
 						0:{  
-								items:2  
+								items:1  
 						},
 						480:{  
 								items:2
