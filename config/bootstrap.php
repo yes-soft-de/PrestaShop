@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -107,7 +107,6 @@ if ($lastParametersModificationTime) {
     define('_DB_PREFIX_',  $config['parameters']['database_prefix']);
     define('_MYSQL_ENGINE_',  $config['parameters']['database_engine']);
     define('_PS_CACHING_SYSTEM_',  $config['parameters']['ps_caching']);
-
     if (!defined('PS_IN_UPGRADE') && !defined('_PS_IN_TEST_')) {
         define('_PS_CACHE_ENABLED_', $config['parameters']['ps_cache_enable']);
     } else {
@@ -127,7 +126,7 @@ if ($lastParametersModificationTime) {
         define('_COOKIE_IV_', $config['parameters']['cookie_iv']);
     } else {
         // Define cookie IV if missing to prevent failure in composer post-install script
-        define('_COOKIE_IV_', Tools::passwdGen(32));
+        define('_COOKIE_IV_', Tools::passwdGen(8));
     }
 
     // New cookie

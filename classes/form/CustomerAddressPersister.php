@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -65,7 +65,10 @@ class CustomerAddressPersisterCore
         $address->id_customer = $this->customer->id;
 
         if ($address->isUsed()) {
-            return $this->updateUsedAddress($address);
+            $old_address = new Address($address->id);
+            $address->id = $address->id_address = null;
+
+            return $address->save() && $old_address->delete();
         }
 
         return $address->save();
@@ -94,29 +97,5 @@ class CustomerAddressPersisterCore
         }
 
         return $ok;
-    }
-
-    /**
-     * When an address has already been used in a placed order, it is not edited directly,
-     * instead it is set to "deleted" (but kept in database) and a new address
-     * is created.
-     *
-     * @param Address $address
-     *
-     * @return bool
-     */
-    private function updateUsedAddress(Address $address)
-    {
-        $old_address = new Address($address->id);
-        $address->id = $address->id_address = null;
-
-        if ($address->save() && $old_address->delete()) {
-            // a new address was created, we must update current cart
-            $this->cart->updateAddressId($old_address->id, $address->id);
-
-            return true;
-        }
-
-        return false;
     }
 }

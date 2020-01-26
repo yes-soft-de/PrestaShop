@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -26,18 +26,18 @@
 
 namespace PrestaShop\PrestaShop\Core\Domain\Currency\CommandHandler;
 
-use PrestaShop\PrestaShop\Core\Domain\Currency\Command\AddOfficialCurrencyCommand;
+use PrestaShop\PrestaShop\Core\Domain\Currency\Command\AddCurrencyCommand;
 use PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\CurrencyId;
 
 /**
- * Interface AddCurrencyHandlerInterface defines contract for AddOfficialCurrencyHandler
+ * Interface AddCurrencyHandlerInterface defines contract for CreateCurrencyHandler
  */
 interface AddCurrencyHandlerInterface
 {
     /**
-     * @param AddOfficialCurrencyCommand $command
+     * @param AddCurrencyCommand $command
      *
      * @return CurrencyId
      */
-    public function handle(AddOfficialCurrencyCommand $command);
+    public function handle(AddCurrencyCommand $command);
 }

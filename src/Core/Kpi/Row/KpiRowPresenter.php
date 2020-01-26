@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -42,7 +42,7 @@ final class KpiRowPresenter implements KpiRowPresenterInterface
 
         /** @var KpiInterface $kpi */
         foreach ($kpiRow->getKpis() as $kpi) {
-            $renderedKpis[] = $kpi->render($kpiRow->getOptions());
+            $renderedKpis[] = $kpi->render();
         }
 
         return [

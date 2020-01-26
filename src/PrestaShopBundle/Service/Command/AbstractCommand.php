@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -50,12 +50,8 @@ abstract class AbstractCommand
         set_time_limit(0);
 
         if (null === $kernel) {
-            global $kernel;
-
-            if (null === $kernel) {
-                require_once _PS_ROOT_DIR_ . '/app/AppKernel.php';
-                $kernel = new AppKernel(_PS_ENV_, _PS_MODE_DEV_);
-            }
+            require_once _PS_ROOT_DIR_ . '/app/AppKernel.php';
+            $kernel = new AppKernel(_PS_MODE_DEV_ ? 'dev' : 'prod', false);
         }
 
         $this->kernel = $kernel;

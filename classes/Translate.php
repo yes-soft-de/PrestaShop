@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -177,8 +177,7 @@ class TranslateCore
         $sprintf = null,
         $js = false,
         $locale = null,
-        $fallback = true,
-        $escape = true
+        $fallback = true
     ) {
         global $_MODULES, $_MODULE, $_LANGADM;
 
@@ -199,13 +198,13 @@ class TranslateCore
 
         if (!isset($translationsMerged[$name][$iso])) {
             $filesByPriority = array(
+                // Translations in theme
+                _PS_THEME_DIR_ . 'modules/' . $name . '/translations/' . $iso . '.php',
+                _PS_THEME_DIR_ . 'modules/' . $name . '/' . $iso . '.php',
                 // PrestaShop 1.5 translations
                 _PS_MODULE_DIR_ . $name . '/translations/' . $iso . '.php',
                 // PrestaShop 1.4 translations
                 _PS_MODULE_DIR_ . $name . '/' . $iso . '.php',
-                // Translations in theme
-                _PS_THEME_DIR_ . 'modules/' . $name . '/translations/' . $iso . '.php',
-                _PS_THEME_DIR_ . 'modules/' . $name . '/' . $iso . '.php',
             );
             foreach ($filesByPriority as $file) {
                 if (file_exists($file)) {
@@ -257,7 +256,7 @@ class TranslateCore
 
             if ($js) {
                 $ret = addslashes($ret);
-            } elseif ($escape) {
+            } else {
                 $ret = htmlspecialchars($ret, ENT_COMPAT, 'UTF-8');
             }
 

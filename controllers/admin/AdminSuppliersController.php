@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -380,11 +380,10 @@ class AdminSuppliersControllerCore extends AdminController
                     $combination['id_product_attribute']
                 );
                 $comb_array[$combination['id_product_attribute']]['product_supplier_reference'] = $comb_infos['product_supplier_reference'];
-                $comb_array[$combination['id_product_attribute']]['product_supplier_price_te'] = $this->context->getCurrentLocale()->formatPrice($comb_infos['product_supplier_price_te'], Currency::getIsoCodeById((int) $comb_infos['id_currency']));
+                $comb_array[$combination['id_product_attribute']]['product_supplier_price_te'] = Tools::displayPrice($comb_infos['product_supplier_price_te'], new Currency($comb_infos['id_currency']));
                 $comb_array[$combination['id_product_attribute']]['reference'] = $combination['reference'];
                 $comb_array[$combination['id_product_attribute']]['ean13'] = $combination['ean13'];
                 $comb_array[$combination['id_product_attribute']]['upc'] = $combination['upc'];
-                $comb_array[$combination['id_product_attribute']]['mpn'] = $combination['mpn'];
                 $comb_array[$combination['id_product_attribute']]['quantity'] = $combination['quantity'];
                 $comb_array[$combination['id_product_attribute']]['attributes'][] = array(
                     $combination['group_name'],
@@ -411,7 +410,7 @@ class AdminSuppliersControllerCore extends AdminController
                 );
                 $products[$i]->product_supplier_reference = $product_infos['product_supplier_reference'];
                 $currencyId = $product_infos['id_currency'] ?: Currency::getDefaultCurrency()->id;
-                $products[$i]->product_supplier_price_te = $this->context->getCurrentLocale()->formatPrice($product_infos['product_supplier_price_te'], Currency::getIsoCodeById((int) $currencyId));
+                $products[$i]->product_supplier_price_te = Tools::displayPrice($product_infos['product_supplier_price_te'], new Currency($currencyId));
             }
         }
 

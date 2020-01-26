@@ -1,5 +1,5 @@
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -48,12 +48,14 @@ $(document).ready(function() {
 	        e.preventDefault();
 		}
 	});
-	$(document).on('blur', '#addons-search-box', function(e) {
+
+	$("#addons-search-box").live('blur', function() {
 		setTimeout(function(){
 			$("#addons-search-results").remove()
 		}, 200);
 	});
-	$(document).on('click', '.addons-style-view-product', function(e) {
+
+	$(".addons-style-view-product").live('click', function() {
 		goToProduct($(this).find('p').html())
 	});
 

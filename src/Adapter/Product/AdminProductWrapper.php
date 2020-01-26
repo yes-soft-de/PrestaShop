@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -40,7 +40,6 @@ use Language;
 use ObjectModel;
 use PrestaShop\PrestaShop\Adapter\Entity\Customization;
 use PrestaShop\PrestaShop\Core\Foundation\Database\EntityNotFoundException;
-use PrestaShop\PrestaShop\Core\Localization\Locale;
 use PrestaShopBundle\Utils\FloatParser;
 use Product;
 use ProductDownload;
@@ -64,32 +63,24 @@ class AdminProductWrapper
     private $errors = array();
 
     /**
-     * @var Locale
-     */
-    private $locale;
-
-    /**
      * @var TranslatorInterface
      */
     private $translator;
 
     /**
-     * @var array
+     * @var Context
      */
-    private $employeeAssociatedShops;
+    private $legacyContext;
 
     /**
      * Constructor : Inject Symfony\Component\Translation Translator.
      *
      * @param object $translator
-     * @param array $employeeAssociatedShops
-     * @param Locale $locale
      */
-    public function __construct($translator, array $employeeAssociatedShops, Locale $locale)
+    public function __construct($translator, $legacyContext)
     {
         $this->translator = $translator;
-        $this->employeeAssociatedShops = $employeeAssociatedShops;
-        $this->locale = $locale;
+        $this->legacyContext = $legacyContext->getContext();
     }
 
     /**
@@ -168,8 +159,7 @@ class AdminProductWrapper
             array(),
             $combinationValues['attribute_isbn'],
             $combinationValues['attribute_low_stock_threshold'],
-            $combinationValues['attribute_low_stock_alert'],
-            $combinationValues['attribute_mpn']
+            $combinationValues['attribute_low_stock_alert']
         );
 
         StockAvailable::setProductDependsOnStock((int) $product->id, $product->depends_on_stock, null, $id_product_attribute);
@@ -438,7 +428,7 @@ class AdminProductWrapper
                 if ($specific_price['reduction_type'] == 'percentage') {
                     $impact = '- ' . ($specific_price['reduction'] * 100) . ' %';
                 } elseif ($specific_price['reduction'] > 0) {
-                    $impact = '- ' . $this->locale->formatPrice($specific_price['reduction'], $current_specific_currency['iso_code']) . ' ';
+                    $impact = '- ' . Tools::displayPrice(Tools::ps_round($specific_price['reduction'], 2), $current_specific_currency) . ' ';
                     if ($specific_price['reduction_tax']) {
                         $impact .= '(' . $this->translator->trans('Tax incl.', array(), 'Admin.Global') . ')';
                     } else {
@@ -479,11 +469,11 @@ class AdminProductWrapper
                 if (!$specific_price['id_shop'] || in_array($specific_price['id_shop'], Shop::getContextListShopID())) {
                     $can_delete_specific_prices = true;
                     if (Shop::isFeatureActive()) {
-                        $can_delete_specific_prices = (count($this->employeeAssociatedShops) > 1 && !$specific_price['id_shop']) || $specific_price['id_shop'];
+                        $can_delete_specific_prices = (count($this->legacyContext->employee->getAssociatedShops()) > 1 && !$specific_price['id_shop']) || $specific_price['id_shop'];
                     }
 
                     $price = Tools::ps_round($specific_price['price'], 2);
-                    $fixed_price = (($price == Tools::ps_round($product->price, 2) && $current_specific_currency['id_currency'] == $defaultCurrency->id) || $specific_price['price'] == -1) ? '--' : $this->locale->formatPrice($price, $current_specific_currency['iso_code']);
+                    $fixed_price = ($price == Tools::ps_round($product->price, 2) || $specific_price['price'] == -1) ? '--' : Tools::displayPrice($price, $current_specific_currency);
 
                     $content[] = [
                         'id_specific_price' => $specific_price['id_specific_price'],

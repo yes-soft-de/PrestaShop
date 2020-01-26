@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -36,14 +36,6 @@ class ImageManagerCore
     const ERROR_FILE_NOT_EXIST = 1;
     const ERROR_FILE_WIDTH = 2;
     const ERROR_MEMORY_LIMIT = 3;
-    const MIME_TYPE_SUPPORTED = [
-        'image/gif',
-        'image/jpg',
-        'image/jpeg',
-        'image/pjpeg',
-        'image/png',
-        'image/x-png',
-    ];
 
     /**
      * Generate a cached thumbnail for object lists (eg. carrier, order statuses...etc).
@@ -108,7 +100,7 @@ class ImageManagerCore
         $cacheParam = $disableCache ? '?time=' . time() : '';
 
         if (Context::getContext()->controller->controller_type == 'admin') {
-            return __PS_BASE_URI__ . 'img/tmp/' . $cacheImage . $cacheParam;
+            return '../img/tmp/' . $cacheImage . $cacheParam;
         }
 
         return _PS_TMP_IMG_ . $cacheImage . $cacheParam;
@@ -362,32 +354,39 @@ class ImageManagerCore
     }
 
     /**
-     * @param string $filename
+     * Check if file is a real image.
      *
-     * @return string|bool
+     * @param string $filename File path to check
+     * @param string $fileMimeType File known mime type (generally from $_FILES)
+     * @param array $mimeTypeList Allowed MIME types
+     *
+     * @return bool
      */
-    public static function getMimeType(string $filename)
+    public static function isRealImage($filename, $fileMimeType = null, $mimeTypeList = null)
     {
+        // Detect mime content type
         $mimeType = false;
-        // Try with GD
+        if (!$mimeTypeList) {
+            $mimeTypeList = array('image/gif', 'image/jpg', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png');
+        }
+
+        // Try 4 different methods to determine the mime type
         if (function_exists('getimagesize')) {
             $imageInfo = @getimagesize($filename);
+
             if ($imageInfo) {
                 $mimeType = $imageInfo['mime'];
+            } else {
+                $fileMimeType = false;
             }
-        }
-        // Try with FileInfo
-        if (!$mimeType && function_exists('finfo_open')) {
-            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        } elseif (function_exists('finfo_open')) {
+            $const = defined('FILEINFO_MIME_TYPE') ? FILEINFO_MIME_TYPE : FILEINFO_MIME;
+            $finfo = finfo_open($const);
             $mimeType = finfo_file($finfo, $filename);
             finfo_close($finfo);
-        }
-        // Try with Mime
-        if (!$mimeType && function_exists('mime_content_type')) {
+        } elseif (function_exists('mime_content_type')) {
             $mimeType = mime_content_type($filename);
-        }
-        // Try with exec command and file binary
-        if (!$mimeType && function_exists('exec')) {
+        } elseif (function_exists('exec')) {
             $mimeType = trim(exec('file -b --mime-type ' . escapeshellarg($filename)));
             if (!$mimeType) {
                 $mimeType = trim(exec('file --mime ' . escapeshellarg($filename)));
@@ -396,26 +395,6 @@ class ImageManagerCore
                 $mimeType = trim(exec('file -bi ' . escapeshellarg($filename)));
             }
         }
-
-        return $mimeType;
-    }
-
-    /**
-     * Check if file is a real image.
-     *
-     * @param string $filename File path to check
-     * @param string $fileMimeType File known mime type (generally from $_FILES)
-     * @param array<string>|null $mimeTypeList Allowed MIME types
-     *
-     * @return bool
-     */
-    public static function isRealImage($filename, $fileMimeType = null, $mimeTypeList = null)
-    {
-        if (!$mimeTypeList) {
-            $mimeTypeList = static::MIME_TYPE_SUPPORTED;
-        }
-
-        $mimeType = static::getMimeType($filename);
 
         if ($fileMimeType && (empty($mimeType) || $mimeType == 'regular file' || $mimeType == 'text/plain')) {
             $mimeType = $fileMimeType;
@@ -463,17 +442,15 @@ class ImageManagerCore
      *
      * @param array $file Upload $_FILE value
      * @param int $maxFileSize Maximum upload size
-     * @param array<string>|null $types Authorized extensions
-     * @param array<string>|null $mimeTypeList Authorized mimetypes
      *
      * @return bool|string Return false if no error encountered
      */
-    public static function validateUpload($file, $maxFileSize = 0, $types = null, $mimeTypeList = null)
+    public static function validateUpload($file, $maxFileSize = 0, $types = null)
     {
         if ((int) $maxFileSize > 0 && $file['size'] > (int) $maxFileSize) {
             return Context::getContext()->getTranslator()->trans('Image is too large (%1$d kB). Maximum allowed: %2$d kB', array($file['size'] / 1024, $maxFileSize / 1024), 'Admin.Notifications.Error');
         }
-        if (!ImageManager::isRealImage($file['tmp_name'], $file['type'], $mimeTypeList) || !ImageManager::isCorrectImageFileExt($file['name'], $types) || preg_match('/\%00/', $file['name'])) {
+        if (!ImageManager::isRealImage($file['tmp_name'], $file['type']) || !ImageManager::isCorrectImageFileExt($file['name'], $types) || preg_match('/\%00/', $file['name'])) {
             return Context::getContext()->getTranslator()->trans('Image format not recognized, allowed formats are: .gif, .jpg, .png', array(), 'Admin.Notifications.Error');
         }
         if ($file['error']) {

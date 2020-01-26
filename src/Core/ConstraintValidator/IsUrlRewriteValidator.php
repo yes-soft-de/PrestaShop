@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -26,7 +26,6 @@
 
 namespace PrestaShop\PrestaShop\Core\ConstraintValidator;
 
-use PrestaShop\PrestaShop\Core\ConfigurationInterface;
 use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\IsUrlRewrite;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Constraint;
@@ -39,20 +38,16 @@ use Symfony\Component\Validator\ConstraintValidator;
 class IsUrlRewriteValidator extends ConstraintValidator
 {
     /**
-     * @var ConfigurationInterface|bool
+     * @var bool
      */
-    private $accentedCharsConfiguration;
+    private $isAscendedCharsAllowed;
 
     /**
-     * this constructor can accept boolean value of already predefined accented chars allowance configuration to not
-     * introduce BC break. The recommended approach is to pass
-     * PrestaShop\PrestaShop\Adapter\Configuration as a service instead to avoid keeping cached scalar value.
-     *
-     * @param ConfigurationInterface|bool $accentedCharsConfiguration
+     * @param bool $isAscendedCharsAllowed
      */
-    public function __construct($accentedCharsConfiguration)
+    public function __construct($isAscendedCharsAllowed)
     {
-        $this->accentedCharsConfiguration = $accentedCharsConfiguration;
+        $this->isAscendedCharsAllowed = $isAscendedCharsAllowed;
     }
 
     /**
@@ -82,7 +77,7 @@ class IsUrlRewriteValidator extends ConstraintValidator
     }
 
     /**
-     * Validates url rewrite according the patterns which vary based on ascented chars allowed setting.
+     * Validates url rewrite according the patterns which vary based on ascended chars allowed setting.
      *
      * @param string $urlRewrite
      *
@@ -92,24 +87,10 @@ class IsUrlRewriteValidator extends ConstraintValidator
     {
         $pattern = '/^[_a-zA-Z0-9\-]+$/';
 
-        if ($this->getAllowAccentedCharsSetting()) {
+        if ($this->isAscendedCharsAllowed) {
             $pattern = '/^[_a-zA-Z0-9\pL\pS-]+$/u';
         }
 
         return preg_match($pattern, $urlRewrite);
-    }
-
-    /**
-     * Gets the accented chars url setting.
-     *
-     * @return bool
-     */
-    private function getAllowAccentedCharsSetting()
-    {
-        if ($this->accentedCharsConfiguration instanceof ConfigurationInterface) {
-            return $this->accentedCharsConfiguration->get('PS_ALLOW_ACCENTED_CHARS_URL');
-        }
-
-        return $this->accentedCharsConfiguration;
     }
 }

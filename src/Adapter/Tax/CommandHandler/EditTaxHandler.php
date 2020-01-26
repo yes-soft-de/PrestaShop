@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -58,10 +58,6 @@ final class EditTaxHandler extends AbstractTaxHandler implements EditTaxHandlerI
         }
 
         try {
-            if (false === $tax->validateFields(false) || false === $tax->validateFieldsLang(false)) {
-                throw new TaxException('Tax contains invalid field values');
-            }
-
             if (!$tax->update()) {
                 throw new TaxException(
                     sprintf('Cannot update tax with id "%s"', $tax->id)

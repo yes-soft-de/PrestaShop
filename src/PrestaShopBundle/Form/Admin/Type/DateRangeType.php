@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -28,7 +28,6 @@ namespace PrestaShopBundle\Form\Admin\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DateRangeType extends AbstractType
 {
@@ -44,7 +43,6 @@ class DateRangeType extends AbstractType
                     'placeholder' => 'From',
                 ],
                 'translation_domain' => 'Admin.Global',
-                'date_format' => $options['date_format'],
             ])
             ->add('to', DatePickerType::class, [
                 'required' => false,
@@ -52,16 +50,7 @@ class DateRangeType extends AbstractType
                     'placeholder' => 'To',
                 ],
                 'translation_domain' => 'Admin.Global',
-                'date_format' => $options['date_format'],
             ]);
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'date_format' => 'YYYY-MM-DD',
-        ]);
-        $resolver->setAllowedTypes('date_format', 'string');
     }
 
     /**

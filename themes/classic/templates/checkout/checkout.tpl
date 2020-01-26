@@ -1,5 +1,5 @@
 {**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -55,7 +55,7 @@
         <section id="content">
           <div class="row">
             <div class="cart-grid-body col-xs-12 col-lg-8">
-              {block name='checkout_process'}
+              {block name='cart_summary'}
                 {render file='checkout/checkout-process.tpl' ui=$checkout_process}
               {/block}
             </div>

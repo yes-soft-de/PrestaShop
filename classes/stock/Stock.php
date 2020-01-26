@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -52,9 +52,6 @@ class StockCore extends ObjectModel
     /** @var string UPC */
     public $upc;
 
-    /** @var string MPN */
-    public $mpn;
-
     /** @var int the physical quantity in stock for the current product in the current warehouse */
     public $physical_quantity;
 
@@ -78,7 +75,6 @@ class StockCore extends ObjectModel
             'ean13' => array('type' => self::TYPE_STRING, 'validate' => 'isEan13'),
             'isbn' => array('type' => self::TYPE_STRING, 'validate' => 'isIsbn'),
             'upc' => array('type' => self::TYPE_STRING, 'validate' => 'isUpc'),
-            'mpn' => array('type' => self::TYPE_STRING, 'validate' => 'isMpn'),
             'physical_quantity' => array('type' => self::TYPE_INT, 'validate' => 'isUnsignedInt', 'required' => true),
             'usable_quantity' => array('type' => self::TYPE_INT, 'validate' => 'isInt', 'required' => true),
             'price_te' => array('type' => self::TYPE_FLOAT, 'validate' => 'isPrice', 'required' => true),
@@ -120,7 +116,7 @@ class StockCore extends ObjectModel
     }
 
     /**
-     * Gets reference, ean13 , isbn, mpn and upc of the current product
+     * Gets reference, ean13 , isbn and upc of the current product
      * Stores it in stock for stock_mvt integrity and history purposes.
      */
     protected function getProductInformations()
@@ -128,7 +124,7 @@ class StockCore extends ObjectModel
         // if combinations
         if ((int) $this->id_product_attribute > 0) {
             $query = new DbQuery();
-            $query->select('reference, ean13, isbn, mpn, upc');
+            $query->select('reference, ean13, isbn, upc');
             $query->from('product_attribute');
             $query->where('id_product = ' . (int) $this->id_product);
             $query->where('id_product_attribute = ' . (int) $this->id_product_attribute);
@@ -143,7 +139,6 @@ class StockCore extends ObjectModel
                 $this->ean13 = $row['ean13'];
                 $this->isbn = $row['isbn'];
                 $this->upc = $row['upc'];
-                $this->mpn = $row['mpn'];
             }
         } else {
             // else, simple product
@@ -154,7 +149,6 @@ class StockCore extends ObjectModel
                 $this->ean13 = $product->ean13;
                 $this->isbn = $product->isbn;
                 $this->upc = $product->upc;
-                $this->mpn = $product->mpn;
             }
         }
     }

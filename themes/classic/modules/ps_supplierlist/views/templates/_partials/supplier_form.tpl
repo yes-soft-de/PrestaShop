@@ -1,5 +1,5 @@
 {**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -23,25 +23,11 @@
  * International Registered Trademark & Property of PrestaShop SA
  *}
 
-<div class="suppliers-sort dropdown">
-  <button
-    class="btn-unstyle select-title"
-    rel="nofollow"
-    data-toggle="dropdown"
-    aria-haspopup="true"
-    aria-expanded="false">
-    {l s='All suppliers' d='Shop.Theme.Catalog'}
-    <i class="material-icons float-xs-right">arrow_drop_down</i>
-  </button>
-  <div class="dropdown-menu">
+<form action="#">
+  <select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+    <option value="">{l s='All suppliers' d='Shop.Theme.Catalog'}</option>
     {foreach from=$suppliers item=supplier}
-      <a
-        rel="nofollow"
-        href="{$supplier['link']}"
-        class="select-list js-search-link"
-      >
-        {$supplier['name']}
-      </a>
+      <option value="{$supplier['link']}">{$supplier['name']}</option>
     {/foreach}
-  </div>
-</div>
+  </select>
+</form>

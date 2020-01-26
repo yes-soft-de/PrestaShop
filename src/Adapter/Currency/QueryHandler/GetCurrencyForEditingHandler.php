@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -75,12 +75,8 @@ final class GetCurrencyForEditingHandler implements GetCurrencyForEditingHandler
         return new EditableCurrency(
             $entity->id,
             $entity->iso_code,
-            $entity->getLocalizedNames(),
-            $entity->getLocalizedSymbols(),
             $entity->conversion_rate,
-            $entity->precision,
             $entity->active,
-            $entity->unofficial,
             $entity->getAssociatedShops()
         );
     }

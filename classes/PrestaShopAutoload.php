@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -88,7 +88,7 @@ class PrestaShopAutoload
      */
     public static function getCacheFileIndex()
     {
-        return _PS_CACHE_DIR_ . 'class_index.php';
+        return _PS_ROOT_DIR_ . DIRECTORY_SEPARATOR . 'var' . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . (_PS_MODE_DEV_ ? 'dev' : 'prod') . DIRECTORY_SEPARATOR . 'class_index.php';
     }
 
     /**
@@ -98,7 +98,7 @@ class PrestaShopAutoload
      */
     public static function getNamespacedStubFileIndex()
     {
-        return _PS_CACHE_DIR_ . 'namespaced_class_stub.php';
+        return _PS_ROOT_DIR_ . DIRECTORY_SEPARATOR . 'var' . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . (_PS_MODE_DEV_ ? 'dev' : 'prod') . DIRECTORY_SEPARATOR . 'namespaced_class_stub.php';
     }
 
     /**
@@ -108,7 +108,7 @@ class PrestaShopAutoload
      */
     public static function getStubFileIndex()
     {
-        return _PS_CACHE_DIR_ . 'class_stub.php';
+        return _PS_ROOT_DIR_ . DIRECTORY_SEPARATOR . 'var' . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . (_PS_MODE_DEV_ ? 'dev' : 'prod') . DIRECTORY_SEPARATOR . 'class_stub.php';
     }
 
     /**
@@ -286,10 +286,9 @@ class PrestaShopAutoload
                 } elseif (substr($file, -4) == '.php') {
                     $content = file_get_contents($rootDir . $path . $file);
 
-                    $namePattern = '[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*';
-                    $nameWithNsPattern = '(?:\\\\?(?:' . $namePattern . '\\\\)*' . $namePattern . ')';
-                    $pattern = '~(?<!\w)((abstract\s+)?class|interface)\s+(?P<classname>' . basename($file, '.php') . '(?:Core)?)'
-                                . '(?:\s+extends\s+' . $nameWithNsPattern . ')?(?:\s+implements\s+' . $nameWithNsPattern . '(?:\s*,\s*' . $nameWithNsPattern . ')*)?\s*\{~i';
+                    $namespacePattern = '[\\a-z0-9_]*[\\]';
+                    $pattern = '#\W((abstract\s+)?class|interface)\s+(?P<classname>' . basename($file, '.php') . '(?:Core)?)'
+                                . '(?:\s+extends\s+' . $namespacePattern . '[a-z][a-z0-9_]*)?(?:\s+implements\s+' . $namespacePattern . '[a-z][\\a-z0-9_]*(?:\s*,\s*' . $namespacePattern . '[a-z][\\a-z0-9_]*)*)?\s*\{#i';
 
                     //DONT LOAD CLASS WITH NAMESPACE - PSR4 autoloaded from composer
                     $usesNamespace = false;

@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -27,10 +27,8 @@
 namespace PrestaShopBundle\EventListener;
 
 use PrestaShopBundle\Security\Annotation\AdminSecurity;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\Routing\RouterInterface;
@@ -80,35 +78,14 @@ class AccessDeniedListener
             if ($securityConfiguration instanceof AdminSecurity) {
                 $event->allowCustomResponseCode();
 
-                $event->setResponse(
-                    $this->getAccessDeniedResponse($event->getRequest(), $securityConfiguration)
-                );
+                $this->showNotificationMessage($securityConfiguration);
+                $url = $this->computeRedirectionUrl($securityConfiguration, $event->getRequest());
+
+                $event->setResponse(new RedirectResponse($url));
 
                 return;
             }
         }
-    }
-
-    /**
-     * @param Request $request
-     * @param AdminSecurity $adminSecurity
-     *
-     * @return Response
-     */
-    private function getAccessDeniedResponse(Request $request, AdminSecurity $adminSecurity)
-    {
-        if ($request->isXmlHttpRequest()) {
-            return new JsonResponse([
-                'status' => false,
-                'message' => $this->getErrorMessage($adminSecurity),
-            ], Response::HTTP_FORBIDDEN);
-        }
-
-        $this->session->getFlashBag()->add('error', $this->getErrorMessage($adminSecurity));
-
-        return new RedirectResponse(
-            $this->computeRedirectionUrl($adminSecurity, $request)
-        );
     }
 
     /**
@@ -137,6 +114,23 @@ class AccessDeniedListener
     }
 
     /**
+     * Send an error message when redirected, will only work on migrated pages.
+     *
+     * @param AdminSecurity $adminSecurity
+     */
+    private function showNotificationMessage(AdminSecurity $adminSecurity)
+    {
+        $this->session->getFlashBag()->add(
+            'error',
+            $this->translator->trans(
+                $adminSecurity->getMessage(),
+                [],
+                $adminSecurity->getDomain()
+            )
+        );
+    }
+
+    /**
      * Gets query parameters by comparing them to the current request attributes.
      *
      * @param array $queryParametersToKeep
@@ -156,19 +150,5 @@ class AccessDeniedListener
         }
 
         return $result;
-    }
-
-    /**
-     * @param AdminSecurity $adminSecurity
-     *
-     * @return string
-     */
-    private function getErrorMessage(AdminSecurity $adminSecurity)
-    {
-        return $this->translator->trans(
-            $adminSecurity->getMessage(),
-            [],
-            $adminSecurity->getDomain()
-        );
     }
 }

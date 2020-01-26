@@ -1,5 +1,5 @@
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -750,24 +750,21 @@ $(document).ready(function()
       return copyMeta2friendlyURL()
   });
 
-  $(document)
-    .ajaxStart(function() {
-      ajax_running_timeout = setTimeout(function() {
-        showAjaxOverlay()
-      }, 1000);
-    })
-    .ajaxStop(function() {
-      setTimeout(function() {
-        $('#ajax_running').hide()
-      }, 1000);
-      clearTimeout(ajax_running_timeout);
-    })
-    .ajaxError(function() {
-      setTimeout(function() {
-        $('#ajax_running').hide()
-      }, 1000);
-      clearTimeout(ajax_running_timeout);
-    });
+  $('#ajax_running').ajaxStart(function() {
+    ajax_running_timeout = setTimeout(function() {showAjaxOverlay()}, 1000);
+  });
+
+  $('#ajax_running').ajaxStop(function() {
+    var element = $(this)
+    setTimeout(function(){element.hide()}, 1000);
+    clearTimeout(ajax_running_timeout);
+  });
+
+  $('#ajax_running').ajaxError(function() {
+    var element = $(this)
+    setTimeout(function(){element.hide()}, 1000);
+    clearTimeout(ajax_running_timeout);
+  });
 
   bindTabModuleListAction();
 
@@ -902,7 +899,6 @@ $(document).ready(function()
   });
 
   $('.swap-container').each(function() {
-    var swap_container = this;
     /** make sure that all the swap id is present in the dom to prevent mistake **/
     if (typeof $('.addSwap', this) !== undefined && typeof $(".removeSwap", this) !== undefined &&
       typeof $('.selectedSwap', this) !== undefined && typeof $('.availableSwap', this) !== undefined)
@@ -911,7 +907,7 @@ $(document).ready(function()
       bindSwapButton('remove', 'selected', 'available', this);
 
       $('button:submit').click(function() {
-        bindSwapSave(swap_container);
+        bindSwapSave(this);
       });
     }
   });

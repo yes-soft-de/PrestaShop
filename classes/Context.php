@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -24,7 +24,6 @@
  * International Registered Trademark & Property of PrestaShop SA
  */
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
-use PrestaShop\PrestaShop\Core\Localization\CLDR\ComputingPrecision;
 use PrestaShop\PrestaShop\Core\Localization\Locale;
 use PrestaShopBundle\Translation\Loader\SqlTranslationLoader;
 use PrestaShopBundle\Translation\TranslatorComponent as Translator;
@@ -100,9 +99,6 @@ class ContextCore
 
     /** @var Translator */
     protected $translator = null;
-
-    /** @var int */
-    protected $priceComputingPrecision = null;
 
     /**
      * Mobile device of the customer.
@@ -341,13 +337,12 @@ class ContextCore
         $customer->logged = 1;
         $this->cookie->email = $customer->email;
         $this->cookie->is_guest = $customer->isGuest();
+        $this->cart->secure_key = $customer->secure_key;
 
         if (Configuration::get('PS_CART_FOLLOWING') && (empty($this->cookie->id_cart) || Cart::getNbProducts($this->cookie->id_cart) == 0) && $idCart = (int) Cart::lastNoneOrderedCart($this->customer->id)) {
             $this->cart = new Cart($idCart);
-            $this->cart->secure_key = $customer->secure_key;
         } else {
             $idCarrier = (int) $this->cart->id_carrier;
-            $this->cart->secure_key = $customer->secure_key;
             $this->cart->id_carrier = 0;
             $this->cart->setDeliveryOption(null);
             $this->cart->updateAddressId($this->cart->id_address_delivery, (int) Address::getFirstCustomerAddressId((int) ($customer->id)));
@@ -411,6 +406,8 @@ class ContextCore
         // In case we have at least 1 translated message, we return the current translator.
         // If some translations are missing, clear cache
         if ($locale === '' || count($translator->getCatalogue($locale)->all())) {
+            $this->translator = $translator;
+
             return $translator;
         }
 
@@ -469,20 +466,5 @@ class ContextCore
         }
 
         return $locations;
-    }
-
-    /**
-     * Returns the computing precision according to the current currency
-     *
-     * @return int
-     */
-    public function getComputingPrecision()
-    {
-        if ($this->priceComputingPrecision === null) {
-            $computingPrecision = new ComputingPrecision();
-            $this->priceComputingPrecision = $computingPrecision->getPrecision($this->currency->precision);
-        }
-
-        return $this->priceComputingPrecision;
     }
 }

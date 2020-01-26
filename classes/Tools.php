@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -25,7 +25,6 @@
  */
 use Composer\CaBundle\CaBundle;
 use PrestaShop\PrestaShop\Adapter\ContainerFinder;
-use PrestaShop\PrestaShop\Core\Exception\ContainerNotFoundException;
 use PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException;
 use PrestaShop\PrestaShop\Core\Localization\Locale\Repository as LocaleRepository;
 use PHPSQLParser\PHPSQLParser;
@@ -33,7 +32,6 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use PrestaShop\PrestaShop\Core\Foundation\Filesystem\FileSystem as PsFileSystem;
 use PrestaShop\PrestaShop\Core\Localization\Locale;
-use PrestaShop\PrestaShop\Core\String\CharacterCleaner;
 
 class ToolsCore
 {
@@ -482,15 +480,34 @@ class ToolsCore
      */
     public static function extractHost($url)
     {
-        $parsed = parse_url($url);
-        if (!is_array($parsed)) {
-            return $url;
+        if (PHP_VERSION_ID >= 50628) {
+            $parsed = parse_url($url);
+            if (!is_array($parsed)) {
+                return $url;
+            }
+            if (empty($parsed['host']) || empty($parsed['scheme'])) {
+                return '';
+            }
+
+            return $parsed['host'];
         }
-        if (empty($parsed['host']) || empty($parsed['scheme'])) {
+
+        // big workaround needed
+        // @see: https://bugs.php.net/bug.php?id=73192
+        // @see: https://3v4l.org/nFYJh
+
+        $matches = [];
+        if (!preg_match('/^[\w]+:\/\/(?<authority>[^\/?#$]+)/ui', $url, $matches)) {
+            // relative url
+            return '';
+        }
+        $authority = $matches['authority'];
+
+        if (!preg_match('/(?:(?<user>.+):(?<pass>.+)@)?(?<domain>[\w.-]+)(?::(?<port>\d+))?/ui', $authority, $matches)) {
             return '';
         }
 
-        return $parsed['host'];
+        return $matches['domain'];
     }
 
     /**
@@ -768,7 +785,7 @@ class ToolsCore
      *
      * @throws Exception
      */
-    public static function getContextLocale(Context $context)
+    protected static function getContextLocale(Context $context)
     {
         $locale = $context->getCurrentLocale();
         if (null !== $locale) {
@@ -820,16 +837,14 @@ class ToolsCore
 
     public static function displayPriceSmarty($params, &$smarty)
     {
-        $context = Context::getContext();
-        $locale = static::getContextLocale($context);
         if (array_key_exists('currency', $params)) {
             $currency = Currency::getCurrencyInstance((int) $params['currency']);
             if (Validate::isLoadedObject($currency)) {
-                return $locale->formatPrice($params['price'], $currency->iso_code);
+                return Tools::displayPrice($params['price'], $currency, false);
             }
         }
 
-        return $locale->formatPrice($params['price'], $context->currency->iso_code);
+        return Tools::displayPrice($params['price']);
     }
 
     /**
@@ -934,7 +949,7 @@ class ToolsCore
             $amount *= $currency_to->conversion_rate;
         }
 
-        return Tools::ps_round($amount, Context::getContext()->getComputingPrecision());
+        return Tools::ps_round($amount, _PS_PRICE_COMPUTE_PRECISION_);
     }
 
     /**
@@ -2364,10 +2379,7 @@ class ToolsCore
 
     protected static $_cache_nb_media_servers = null;
 
-    /**
-     * @return bool
-     */
-    public static function hasMediaServer(): bool
+    public static function getMediaServer($filename)
     {
         if (self::$_cache_nb_media_servers === null && defined('_MEDIA_SERVER_1_') && defined('_MEDIA_SERVER_2_') && defined('_MEDIA_SERVER_3_')) {
             if (_MEDIA_SERVER_1_ == '') {
@@ -2381,17 +2393,7 @@ class ToolsCore
             }
         }
 
-        return self::$_cache_nb_media_servers > 0;
-    }
-
-    /**
-     * @param string $filename
-     *
-     * @return string
-     */
-    public static function getMediaServer(string $filename): string
-    {
-        if (self::hasMediaServer() && ($id_media_server = (abs(crc32($filename)) % self::$_cache_nb_media_servers + 1))) {
+        if ($filename && self::$_cache_nb_media_servers && ($id_media_server = (abs(crc32($filename)) % self::$_cache_nb_media_servers + 1))) {
             return constant('_MEDIA_SERVER_' . $id_media_server . '_');
         }
 
@@ -3012,6 +3014,10 @@ exit;
      */
     public static function jsonEncode($data, $options = 0, $depth = 512)
     {
+        if (PHP_VERSION_ID < 50500) { /* PHP version < 5.5.0 */
+            return json_encode($data, $options);
+        }
+
         return json_encode($data, $options, $depth);
     }
 
@@ -3304,7 +3310,7 @@ exit;
     {
         header('HTTP/1.1 404 Not Found');
         header('Status: 404 Not Found');
-        include __DIR__ . '/../404.php';
+        include dirname(__FILE__) . '/../404.php';
         die;
     }
 
@@ -3415,7 +3421,7 @@ exit;
     public static function clearSf2Cache($env = null)
     {
         if (null === $env) {
-            $env = _PS_ENV_;
+            $env = _PS_MODE_DEV_ ? 'dev' : 'prod';
         }
 
         $dir = _PS_ROOT_DIR_ . '/var/cache/' . $env . '/';
@@ -3766,33 +3772,27 @@ exit;
      */
     public static function arrayUnique($array)
     {
-        return array_unique($array, SORT_REGULAR);
+        if (version_compare(PHP_VERSION, '5.2.9', '<')) {
+            return array_unique($array);
+        } else {
+            return array_unique($array, SORT_REGULAR);
+        }
     }
 
     /**
      * Delete unicode class from regular expression patterns.
      *
-     * @deprecated Use PrestaShop\PrestaShop\Core\String\CharacterCleaner::cleanNonUnicodeSupport() instead
-     *
      * @param string $pattern
      *
      * @return string pattern
-     *
-     * @throws Exception
      */
     public static function cleanNonUnicodeSupport($pattern)
     {
-        $context = Context::getContext();
-        $containerFinder = new ContainerFinder($context);
-        try {
-            $container = $containerFinder->getContainer();
-            $characterCleaner = $container->get('prestashop.core.string.character_cleaner');
-        } catch (ContainerNotFoundException $e) {
-            // Used when the container is not generated
-            $characterCleaner = new CharacterCleaner();
+        if (!defined('PREG_BAD_UTF8_OFFSET')) {
+            return $pattern;
         }
 
-        return $characterCleaner->cleanNonUnicodeSupport($pattern);
+        return preg_replace('/\\\[px]\{[a-z]{1,2}\}|(\/[a-z]*)u([a-z]*)$/i', '$1$2', $pattern);
     }
 
     protected static $is_addons_up = true;
@@ -4299,9 +4299,9 @@ exit;
 
     public static function redirectToInstall()
     {
-        if (file_exists(__DIR__ . '/../install')) {
+        if (file_exists(dirname(__FILE__) . '/../install')) {
             header('Location: install/');
-        } elseif (file_exists(__DIR__ . '/../install-dev')) {
+        } elseif (file_exists(dirname(__FILE__) . '/../install-dev')) {
             header('Location: install-dev/');
         } else {
             die('Error: "install" directory is missing');

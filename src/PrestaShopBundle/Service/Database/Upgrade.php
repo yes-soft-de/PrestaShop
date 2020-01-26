@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -39,9 +39,8 @@ class Upgrade extends AbstractCommand
         $command = new UpdateSchemaCommand();
         $this->application->add($command);
 
-        $this->commands[] = [
+        $this->commands[] = array(
             'command' => 'prestashop:schema:update-without-foreign',
-            '--env' => _PS_ENV_,
-        ];
+        );
     }
 }

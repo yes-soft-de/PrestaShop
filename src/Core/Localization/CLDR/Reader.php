@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -568,11 +568,7 @@ class Reader implements ReaderInterface
                 if (!empty($codesMapping)) {
                     /** @var SimplexmlElement $codesMapping */
                     $codesMapping = $codesMapping[0];
-                    $numericIsoCode = (string) $codesMapping->attributes()->numeric;
-                    if (strlen($numericIsoCode) < 3) {
-                        $numericIsoCode = str_pad($numericIsoCode, 3, '0', STR_PAD_LEFT);
-                    }
-                    $currencyData->setNumericIsoCode($numericIsoCode);
+                    $currencyData->setNumericIsoCode((string) $codesMapping->attributes()->numeric);
                 }
 
                 $fractionsData = $this->supplementalXml->supplementalData->xpath(

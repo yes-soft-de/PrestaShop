@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -23,20 +23,18 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * International Registered Trademark & Property of PrestaShop SA
  */
-use PrestaShop\PrestaShop\Adapter\Language\LanguageImageManager;
 use PrestaShop\PrestaShop\Core\Addon\Theme\ThemeManagerBuilder;
 use PrestaShop\PrestaShop\Core\Localization\RTL\Processor as RtlStylesheetProcessor;
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 use PrestaShop\PrestaShop\Core\Exception\CoreException;
 use PrestaShop\PrestaShop\Core\Domain\MailTemplate\Command\GenerateThemeMailTemplatesCommand;
 use PrestaShop\PrestaShop\Core\CommandBus\CommandBusInterface;
-use PrestaShop\PrestaShop\Core\Language\LanguageInterface;
 
-class LanguageCore extends ObjectModel implements LanguageInterface
+class LanguageCore extends ObjectModel
 {
     const ALL_LANGUAGES_FILE = '/app/Resources/all_languages.json';
-    const SF_LANGUAGE_PACK_URL = 'https://i18n.prestashop.com/translations/%version%/%locale%/%locale%.zip';
-    const EMAILS_LANGUAGE_PACK_URL = 'https://i18n.prestashop.com/mails/%version%/%locale%/%locale%.zip';
+    const SF_LANGUAGE_PACK_URL = 'http://i18n.prestashop.com/translations/%version%/%locale%/%locale%.zip';
+    const EMAILS_LANGUAGE_PACK_URL = 'http://i18n.prestashop.com/mails/%version%/%locale%/%locale%.zip';
 
     public $id;
 
@@ -90,11 +88,6 @@ class LanguageCore extends ObjectModel implements LanguageInterface
 
     /** @var array Languages cache */
     protected static $_checkedLangs;
-    /**
-     * @var array[] language information, indexed by id_language
-     *
-     * @see loadLanguages()
-     */
     protected static $_LANGUAGES;
     protected static $countActiveLanguages = array();
 
@@ -122,7 +115,9 @@ class LanguageCore extends ObjectModel implements LanguageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @see ObjectModel::getFields()
+     *
+     * @return array
      */
     public function getFields()
     {
@@ -184,9 +179,6 @@ class LanguageCore extends ObjectModel implements LanguageInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function add($autodate = true, $nullValues = false, $only_add = false)
     {
         if (!parent::add($autodate, $nullValues)) {
@@ -211,9 +203,6 @@ class LanguageCore extends ObjectModel implements LanguageInterface
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($nullValues = false)
     {
         if (!parent::update($nullValues)) {
@@ -231,13 +220,6 @@ class LanguageCore extends ObjectModel implements LanguageInterface
         return true;
     }
 
-    /**
-     * Checks if every files exists for this language
-     *
-     * @see checkFilesWithIsoCode()
-     *
-     * @return bool
-     */
     public function checkFiles()
     {
         return Language::checkFilesWithIsoCode($this->iso_code);
@@ -248,9 +230,8 @@ class LanguageCore extends ObjectModel implements LanguageInterface
      * Concerned files are those located in translations/$iso_code/
      * and translations/mails/$iso_code .
      *
-     * @param string $iso_code 2-letter ISO code
-     *
-     * @return bool True if all files exists
+     * @param mixed $iso_code
+     * @returntrue if all files exists
      */
     public static function checkFilesWithIsoCode($iso_code)
     {
@@ -268,19 +249,6 @@ class LanguageCore extends ObjectModel implements LanguageInterface
         return true;
     }
 
-    /**
-     * @param string $iso_from
-     * @param string $theme_from
-     * @param bool $iso_to
-     * @param bool $theme_to
-     * @param bool $select
-     * @param bool $check
-     * @param bool $modules
-     *
-     * @return string[]
-     *
-     * @throws PrestaShopException
-     */
     public static function getFilesList($iso_from, $theme_from, $iso_to = false, $theme_to = false, $select = false, $check = false, $modules = false)
     {
         if (empty($iso_from)) {
@@ -436,7 +404,7 @@ class LanguageCore extends ObjectModel implements LanguageInterface
     /**
      * loadUpdateSQL will create default lang values when you create a new lang, based on current lang id.
      *
-     * @return bool True if success
+     * @return bool true if succeed
      */
     public function loadUpdateSQL()
     {
@@ -540,9 +508,6 @@ class LanguageCore extends ObjectModel implements LanguageInterface
         return Tools::deleteDirectory($dir);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function delete()
     {
         if (!$this->hasMultishopEntries() || Shop::getContext() == Shop::CONTEXT_ALL) {
@@ -599,7 +564,25 @@ class LanguageCore extends ObjectModel implements LanguageInterface
                 Tools::deleteDirectory(_PS_TRANSLATIONS_DIR_ . $this->iso_code);
             }
 
-            (new LanguageImageManager())->deleteImages($this->id, $this->iso_code);
+            $images = array(
+                '.jpg',
+                '-default-' . ImageType::getFormattedName('thickbox') . '.jpg',
+                '-default-' . ImageType::getFormattedName('home') . '.jpg',
+                '-default-' . ImageType::getFormattedName('large') . '.jpg',
+                '-default-' . ImageType::getFormattedName('medium') . '.jpg',
+                '-default-' . ImageType::getFormattedName('small') . '.jpg',
+            );
+            $images_directories = array(_PS_CAT_IMG_DIR_, _PS_MANU_IMG_DIR_, _PS_PROD_IMG_DIR_, _PS_SUPP_IMG_DIR_);
+            foreach ($images_directories as $image_directory) {
+                foreach ($images as $image) {
+                    if (file_exists($image_directory . $this->iso_code . $image)) {
+                        unlink($image_directory . $this->iso_code . $image);
+                    }
+                    if (file_exists(_PS_ROOT_DIR_ . '/img/l/' . $this->id . '.jpg')) {
+                        unlink(_PS_ROOT_DIR_ . '/img/l/' . $this->id . '.jpg');
+                    }
+                }
+            }
         }
 
         if (!parent::delete()) {
@@ -609,9 +592,6 @@ class LanguageCore extends ObjectModel implements LanguageInterface
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function deleteSelection($selection)
     {
         if (!is_array($selection)) {
@@ -628,15 +608,13 @@ class LanguageCore extends ObjectModel implements LanguageInterface
     }
 
     /**
-     * Returns installed languages.
-     *
-     * @see loadLanguages()
+     * Returns available languages.
      *
      * @param bool $active Select only active languages
-     * @param int|false $id_shop Shop ID
+     * @param int|bool $id_shop Shop ID
      * @param bool $ids_only If true, returns an array of language IDs
      *
-     * @return array[] Language information
+     * @return array Languages
      */
     public static function getLanguages($active = true, $id_shop = false, $ids_only = false)
     {
@@ -657,10 +635,10 @@ class LanguageCore extends ObjectModel implements LanguageInterface
     }
 
     /**
-     * Returns an array of installed language IDs.
+     * Returns an array of language IDs.
      *
      * @param bool $active Select only active languages
-     * @param int|false $id_shop Shop ID
+     * @param int|bool $id_shop Shop ID
      *
      * @return array
      */
@@ -669,13 +647,6 @@ class LanguageCore extends ObjectModel implements LanguageInterface
         return self::getLanguages($active, $id_shop, true);
     }
 
-    /**
-     * Returns installed language information for the provided id_lang
-     *
-     * @param int $id_lang Language Id
-     *
-     * @return array|false
-     */
     public static function getLanguage($id_lang)
     {
         if (!self::$_LANGUAGES) {
@@ -689,11 +660,11 @@ class LanguageCore extends ObjectModel implements LanguageInterface
     }
 
     /**
-     * Return iso code from id (installed languages only).
+     * Return iso code from id.
      *
      * @param int $id_lang Language ID
      *
-     * @return string 2-letter ISO code
+     * @return string Iso code
      */
     public static function getIsoById($id_lang)
     {
@@ -707,15 +678,6 @@ class LanguageCore extends ObjectModel implements LanguageInterface
         return false;
     }
 
-    /**
-     * Returns language information form the all_languages file using IETF language tag
-     *
-     * @param string $locale IETF language tag
-     *
-     * @return array|false
-     *
-     * @throws Exception
-     */
     public static function getJsonLanguageDetails($locale)
     {
         if (self::$_cache_all_language_json === null) {
@@ -724,7 +686,7 @@ class LanguageCore extends ObjectModel implements LanguageInterface
             $allLanguages = json_decode($allLanguages, true);
 
             if (JSON_ERROR_NONE !== json_last_error()) {
-                throw new Exception(
+                throw new \Exception(
                     sprintf(
                         'The legacy to standard locales JSON could not be decoded %s',
                         json_last_error_msg()
@@ -741,12 +703,12 @@ class LanguageCore extends ObjectModel implements LanguageInterface
     }
 
     /**
-     * Returns language id from iso code.
+     * Return id from iso code.
      *
      * @param string $iso_code Iso code
      * @param bool $no_cache
      *
-     * @return int|false|null
+     * @return false|string|null
      */
     public static function getIdByIso($iso_code, $no_cache = false)
     {
@@ -767,12 +729,12 @@ class LanguageCore extends ObjectModel implements LanguageInterface
     }
 
     /**
-     * Returns language id from locale
+     * Return id from locale
      *
-     * @param string $locale Locale IETF language tag
-     * @param bool $noCache
+     * @param string $locale Locale
+     * @param bool $no_cache
      *
-     * @return int|false|null
+     * @return false|string|null
      */
     public static function getIdByLocale($locale, $noCache = false)
     {
@@ -789,11 +751,9 @@ class LanguageCore extends ObjectModel implements LanguageInterface
     }
 
     /**
-     * Returns language information from the all-languages file
+     * @param string $iso
      *
-     * @param string $iso 2-letter ISO code
-     *
-     * @return array|false
+     * @return array|bool
      *
      * @throws Exception
      */
@@ -804,13 +764,9 @@ class LanguageCore extends ObjectModel implements LanguageInterface
         $allLanguages = file_get_contents(_PS_ROOT_DIR_ . self::ALL_LANGUAGES_FILE);
         $allLanguages = json_decode($allLanguages, true);
 
-        if (JSON_ERROR_NONE !== json_last_error()) {
-            throw new Exception(
-                sprintf(
-                    'The legacy to standard locales JSON could not be decoded %s',
-                    json_last_error_msg()
-                )
-            );
+        $jsonLastErrorCode = json_last_error();
+        if (JSON_ERROR_NONE !== $jsonLastErrorCode) {
+            throw new \Exception('The legacy to standard locales JSON could not be decoded', $jsonLastErrorCode);
         }
 
         return isset($allLanguages[$iso]) ? $allLanguages[$iso] : false;
@@ -819,7 +775,7 @@ class LanguageCore extends ObjectModel implements LanguageInterface
     /**
      * Returns locale with iso parameter.
      *
-     * @param string $isoCode 2-letter ISO code
+     * @param string $isoCode
      *
      * @return string|false
      *
@@ -860,15 +816,6 @@ class LanguageCore extends ObjectModel implements LanguageInterface
         return false;
     }
 
-    /**
-     * Retrieves a language code from an installed language using a 2-letter iso code
-     *
-     * @param string $iso_code 2-letter iso code
-     *
-     * @return string|false
-     *
-     * @throws PrestaShopException
-     */
     public static function getLanguageCodeByIso($iso_code)
     {
         if (!Validate::isLanguageIsoCode($iso_code)) {
@@ -878,16 +825,6 @@ class LanguageCore extends ObjectModel implements LanguageInterface
         return Db::getInstance()->getValue('SELECT `language_code` FROM `' . _DB_PREFIX_ . 'lang` WHERE `iso_code` = \'' . pSQL(strtolower($iso_code)) . '\'');
     }
 
-    /**
-     * Retrieves an installed language by IETF language tag
-     *
-     * @param string $code IETF language tag
-     *
-     * @return Language|false
-     *
-     * @throws PrestaShopDatabaseException
-     * @throws PrestaShopException
-     */
     public static function getLanguageByIETFCode($code)
     {
         if (!Validate::isLanguageCode($code)) {
@@ -913,11 +850,11 @@ class LanguageCore extends ObjectModel implements LanguageInterface
         );
 
         // Instantiate the Language object if we found it.
-        if (!$id_lang) {
+        if ($id_lang) {
+            return new Language($id_lang);
+        } else {
             return false;
         }
-
-        return new Language($id_lang);
     }
 
     /**
@@ -929,22 +866,9 @@ class LanguageCore extends ObjectModel implements LanguageInterface
      */
     public static function getIsoIds($active = true)
     {
-        return Db::getInstance(_PS_USE_SQL_SLAVE_)
-            ->executeS(
-                'SELECT `id_lang`, `iso_code` FROM `' . _DB_PREFIX_ . 'lang` ' . ($active ? 'WHERE active = 1' : '')
-            );
+        return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT `id_lang`, `iso_code` FROM `' . _DB_PREFIX_ . 'lang` ' . ($active ? 'WHERE active = 1' : ''));
     }
 
-    /**
-     * Copies translated information in *_lang tables from one language to another
-     *
-     * @param int $from Source language id
-     * @param int $to Destination language id
-     *
-     * @return true
-     *
-     * @throws PrestaShopDatabaseException
-     */
     public static function copyLanguageData($from, $to)
     {
         $result = Db::getInstance()->executeS('SHOW TABLES FROM `' . _DB_NAME_ . '`');
@@ -973,7 +897,7 @@ class LanguageCore extends ObjectModel implements LanguageInterface
     }
 
     /**
-     * Load all installed languages in memory for caching.
+     * Load all languages in memory for caching.
      */
     public static function loadLanguages()
     {
@@ -1058,26 +982,41 @@ class LanguageCore extends ObjectModel implements LanguageInterface
             Configuration::updateGlobalValue('PS_ALLOW_ACCENTED_CHARS_URL', 1);
         }
 
-        $languageManager = new LanguageImageManager();
-        $languageManager->setupLanguageFlag($lang->locale, $lang->id, $lang_pack['flag'] ?? null);
-        $languageManager->setupDefaultImagePlaceholder($lang->iso_code);
+        $flag = Tools::file_get_contents('http://www.prestashop.com/download/lang_packs/flags/jpeg/' . $iso_code . '.jpg');
+        if ($flag != null && !preg_match('/<body>/', $flag)) {
+            $file = fopen(_PS_ROOT_DIR_ . '/img/l/' . (int) $lang->id . '.jpg', 'wb');
+            if ($file) {
+                fwrite($file, $flag);
+                fclose($file);
+            } else {
+                Language::_copyNoneFlag((int) $lang->id);
+            }
+        } else {
+            Language::_copyNoneFlag((int) $lang->id);
+        }
+
+        $files_copy = array('/en.jpg');
+        $imagesType = ImageType::getAll();
+        if (!empty($imagesType)) {
+            foreach ($imagesType as $alias => $config) {
+                $files_copy[] = '/en-default-' . ImageType::getFormattedName($alias) . '.jpg';
+            }
+        }
+
+        foreach (array(_PS_CAT_IMG_DIR_, _PS_MANU_IMG_DIR_, _PS_PROD_IMG_DIR_, _PS_SUPP_IMG_DIR_) as $to) {
+            foreach ($files_copy as $file) {
+                @copy(_PS_ROOT_DIR_ . '/img/l' . $file, $to . str_replace('/en', '/' . $iso_code, $file));
+            }
+        }
 
         self::loadLanguages();
 
         return true;
     }
 
-    /**
-     * @deprecated Since 1.7.7, use LanguageImageManager
-     */
     protected static function _copyNoneFlag($id)
     {
-        @trigger_error(
-            __FUNCTION__ . 'is deprecated since version 1.7.7. Use ' . LanguageImageManager::class . ' instead.',
-            E_USER_DEPRECATED
-        );
-
-        return true;
+        return copy(_PS_ROOT_DIR_ . '/img/l/none.jpg', _PS_ROOT_DIR_ . '/img/l/' . $id . '.jpg');
     }
 
     public static function isInstalled($iso_code)
@@ -1416,15 +1355,6 @@ class LanguageCore extends ObjectModel implements LanguageInterface
         }
     }
 
-    /**
-     * Updates multilang tables using DataLang classes
-     *
-     * @param string $table
-     * @param string $className
-     * @param string $lang
-     *
-     * @throws PrestaShopDatabaseException
-     */
     public static function updateMultilangFromClass($table, $className, $lang)
     {
         if (!class_exists($className)) {
@@ -1560,45 +1490,5 @@ class LanguageCore extends ObjectModel implements LanguageInterface
         return !empty($this->locale) ?
             $this->locale :
             $this->language_code;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getIsoCode()
-    {
-        return $this->iso_code;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getLanguageCode()
-    {
-        return $this->language_code;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isRTL()
-    {
-        return $this->is_rtl;
     }
 }

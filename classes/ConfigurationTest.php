@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -143,7 +143,7 @@ class ConfigurationTestCore
 
     public static function test_phpversion()
     {
-        return version_compare(PHP_VERSION, '7.1.3', '>=');
+        return version_compare(substr(PHP_VERSION, 0, 5), '5.6.0', '>=');
     }
 
     public static function test_apache_mod_rewrite()
@@ -158,7 +158,7 @@ class ConfigurationTestCore
 
     public static function test_new_phpversion()
     {
-        return static::test_phpversion();
+        return version_compare(substr(PHP_VERSION, 0, 5), '5.6.0', '>=');
     }
 
     public static function test_mysql_support()

@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -282,7 +282,7 @@ class AdminCartsControllerCore extends AdminController
         $helper->color = 'color1';
         $helper->title = $this->trans('Total Cart', array(), 'Admin.Orderscustomers.Feature');
         $helper->subtitle = $this->trans('Cart #%ID%', array('%ID%' => $cart->id), 'Admin.Orderscustomers.Feature');
-        $helper->value = $this->context->getCurrentLocale()->formatPrice($total_price, $currency->iso_code);
+        $helper->value = Tools::displayPrice($total_price, $currency);
         $kpi = $helper->generate();
 
         $this->tpl_view_vars = array(
@@ -675,8 +675,8 @@ class AdminCartsControllerCore extends AdminController
             foreach ($summary['products'] as &$product) {
                 $product['numeric_price'] = $product['price'];
                 $product['numeric_total'] = $product['total'];
-                $product['price'] = str_replace($currency->symbol, '', $this->context->getCurrentLocale()->formatPrice($product['price'], $currency->iso_code));
-                $product['total'] = str_replace($currency->symbol, '', $this->context->getCurrentLocale()->formatPrice($product['total'], $currency->iso_code));
+                $product['price'] = str_replace($currency->sign, '', Tools::displayPrice($product['price'], $currency));
+                $product['total'] = str_replace($currency->sign, '', Tools::displayPrice($product['total'], $currency));
                 $product['image_link'] = $this->context->link->getImageLink($product['link_rewrite'], $product['id_image'], 'small_default');
                 if (!isset($product['attributes_small'])) {
                     $product['attributes_small'] = '';
@@ -686,7 +686,7 @@ class AdminCartsControllerCore extends AdminController
         }
         if (count($summary['discounts'])) {
             foreach ($summary['discounts'] as &$voucher) {
-                $voucher['value_real'] = $this->context->getCurrentLocale()->formatPrice($voucher['value_real'], $currency->iso_code);
+                $voucher['value_real'] = Tools::displayPrice($voucher['value_real'], $currency);
             }
         }
 
@@ -761,12 +761,12 @@ class AdminCartsControllerCore extends AdminController
                     continue;
                 }
                 $currency = new Currency((int) $cart['id_currency']);
-                $cart['total_price'] = $this->context->getCurrentLocale()->formatPrice($cart_obj->getOrderTotal(), $currency->iso_code);
+                $cart['total_price'] = Tools::displayPrice($cart_obj->getOrderTotal(), $currency);
             }
         }
         if (count($orders)) {
             foreach ($orders as &$order) {
-                $order['total_paid_real'] = $this->context->getCurrentLocale()->formatPrice($order['total_paid_real'], $currency->iso_code);
+                $order['total_paid_real'] = Tools::displayPrice($order['total_paid_real'], $currency);
             }
         }
         if ($orders || $carts) {

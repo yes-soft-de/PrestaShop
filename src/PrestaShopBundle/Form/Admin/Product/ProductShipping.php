@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -68,12 +68,7 @@ class ProductShipping extends CommonAbstractType
         );
         $this->carriersChoices = [];
         foreach ($carriers as $carrier) {
-            $choiceId = $carrier['id_carrier'] . ' - ' . $carrier['name'];
-            if ($carrier['name']) {
-                $choiceId .= ' (' . $carrier['delay'] . ')';
-            }
-
-            $this->carriersChoices[$choiceId] = $carrier['id_reference'];
+            $this->carriersChoices[$carrier['name'] . ' (' . $carrier['delay'] . ')'] = $carrier['id_reference'];
         }
     }
 

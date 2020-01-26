@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -86,7 +86,7 @@ class CheckoutSessionCore
 
     public function setMessage($message)
     {
-        $this->_updateMessage($message);
+        $this->_updateMessage(Tools::safeOutput($message));
 
         return $this;
     }

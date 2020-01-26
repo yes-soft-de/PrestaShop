@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -32,7 +32,6 @@ use PrestaShop\PrestaShop\Core\Domain\CmsPage\CommandHandler\EditCmsPageHandlerI
 use PrestaShop\PrestaShop\Core\Domain\CmsPage\Exception\CannotEditCmsPageException;
 use PrestaShop\PrestaShop\Core\Domain\CmsPage\Exception\CmsPageException;
 use PrestaShop\PrestaShop\Core\Domain\CmsPage\Exception\CmsPageNotFoundException;
-use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\Exception\CmsPageCategoryException;
 use PrestaShopException;
 
 /**
@@ -44,7 +43,6 @@ final class EditCmsPageHandler extends AbstractCmsPageHandler implements EditCms
      * {@inheritdoc}
      *
      * @throws CmsPageException
-     * @throws CmsPageCategoryException
      */
     public function handle(EditCmsPageCommand $command)
     {
@@ -81,16 +79,10 @@ final class EditCmsPageHandler extends AbstractCmsPageHandler implements EditCms
      *
      * @throws CmsPageException
      * @throws CmsPageNotFoundException
-     * @throws CmsPageCategoryException
      */
     private function createCmsFromCommand(EditCmsPageCommand $command)
     {
         $cms = $this->getCmsPageIfExistsById($command->getCmsPageId()->getValue());
-        $cmsCategoryId = null === $command->getCmsPageCategoryId() ?: $command->getCmsPageCategoryId()->getValue();
-
-        if (null !== $cmsCategoryId && $this->assertCmsCategoryExists($cmsCategoryId)) {
-            $cms->id_cms_category = $cmsCategoryId;
-        }
 
         if (null !== $command->getLocalizedTitle()) {
             $cms->meta_title = $command->getLocalizedTitle();
@@ -98,6 +90,10 @@ final class EditCmsPageHandler extends AbstractCmsPageHandler implements EditCms
 
         if (null !== $command->getLocalizedMetaTitle()) {
             $cms->head_seo_title = $command->getLocalizedMetaTitle();
+        }
+
+        if (null !== $command->getCmsPageCategoryId()) {
+            $cms->id_cms_category = $command->getCmsPageCategoryId()->getValue();
         }
 
         if (null !== $command->getLocalizedMetaDescription()) {

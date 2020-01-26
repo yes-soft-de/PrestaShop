@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -129,7 +129,6 @@ final class CategoryGridDefinitionFactory extends AbstractGridDefinitionFactory
                     'identifier_field' => 'id_category',
                     'bulk_field' => 'id_category',
                     'with_bulk_field' => true,
-                    'clickable' => false,
                 ])
             )
             ->add(

@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -66,16 +66,11 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
         if ($event === null) {
             $event = new HookEvent();
         }
-
         if (!$event instanceof HookEvent) {
             throw new \Exception('HookDispatcher must dispatch a HookEvent subclass only. ' . get_class($event) . ' given.');
         }
 
-        if ($listeners = $this->getListeners(strtolower($eventName))) {
-            $this->doDispatch($listeners, $eventName, $event);
-        }
-
-        return $event;
+        return parent::dispatch($eventName, $event);
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -183,7 +183,7 @@ class AdminCustomerThreadsControllerCore extends AdminController
                     'PS_SAV_IMAP_PWD' => array(
                         'title' => $this->trans('IMAP password', array(), 'Admin.Catalog.Feature'),
                         'hint' => $this->trans('Password to use to connect your IMAP server.', array(), 'Admin.Catalog.Help'),
-                        'type' => 'password',
+                        'type' => 'text',
                     ),
                     'PS_SAV_IMAP_DELETE_MSG' => array(
                         'title' => $this->trans('Delete messages', array(), 'Admin.Catalog.Feature'),
@@ -718,7 +718,7 @@ class AdminCustomerThreadsControllerCore extends AdminController
                         $total_ok += $order['total_paid_real'] / $order['conversion_rate'];
                     }
                     $orders[$key]['date_add'] = Tools::displayDate($order['date_add']);
-                    $orders[$key]['total_paid_real'] = $this->context->getCurrentLocale()->formatPrice($order['total_paid_real'], Currency::getIsoCodeById((int) $order['id_currency']));
+                    $orders[$key]['total_paid_real'] = Tools::displayPrice($order['total_paid_real'], new Currency((int) $order['id_currency']));
                 }
             }
 
@@ -756,7 +756,7 @@ class AdminCustomerThreadsControllerCore extends AdminController
             'orders' => isset($orders) ? $orders : false,
             'customer' => isset($customer) ? $customer : false,
             'products' => isset($products) ? $products : false,
-            'total_ok' => isset($total_ok) ? $this->context->getCurrentLocale()->formatPrice($total_ok, $this->context->currency->iso_code) : false,
+            'total_ok' => isset($total_ok) ? Tools::displayPrice($total_ok, $this->context->currency) : false,
             'orders_ok' => isset($orders_ok) ? $orders_ok : false,
             'count_ok' => isset($orders_ok) ? count($orders_ok) : false,
             'PS_CUSTOMER_SERVICE_SIGNATURE' => str_replace('\r\n', "\n", Configuration::get('PS_CUSTOMER_SERVICE_SIGNATURE', (int) $thread->id_lang)),

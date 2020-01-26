@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -102,10 +102,10 @@ class Install extends AbstractInstall
         static $logger = null;
 
         if (null === $logger) {
+            $cacheDir = _PS_ROOT_DIR_ . '/var/logs/';
+            $file = $cacheDir . (_PS_MODE_DEV_ ? 'dev' : 'prod') . '_' . @date('Ymd') . '_installation.log';
             $logger = new FileLogger();
-            $logger->setFilename(
-                _PS_ROOT_DIR_ . '/var/logs/' . _PS_ENV_ . '_' . @date('Ymd') . '_installation.log'
-            );
+            $logger->setFilename($file);
             $this->logger = $logger;
         }
 
@@ -154,9 +154,9 @@ class Install extends AbstractInstall
             return false;
         }
 
-        $secret = Tools::passwdGen(64);
-        $cookie_key = defined('_COOKIE_KEY_') ? _COOKIE_KEY_ : Tools::passwdGen(64);
-        $cookie_iv = defined('_COOKIE_IV_') ? _COOKIE_IV_ : Tools::passwdGen(32);
+        $secret = Tools::passwdGen(56);
+        $cookie_key = defined('_COOKIE_KEY_') ? _COOKIE_KEY_ : Tools::passwdGen(56);
+        $cookie_iv = defined('_COOKIE_IV_') ? _COOKIE_IV_ : Tools::passwdGen(8);
         $database_port = null;
 
         $splits = preg_split('#:#', $database_host);
@@ -275,7 +275,7 @@ class Install extends AbstractInstall
             $this->clearDatabase();
         }
 
-        $allowed_collation = array('utf8mb4_general_ci', 'utf8mb4_unicode_ci');
+        $allowed_collation = array('utf8_general_ci', 'utf8_unicode_ci');
         $collation_database = Db::getInstance()->getValue('SELECT @@collation_database');
         // Install database structure
         $sql_loader = new SqlLoader();
@@ -817,6 +817,7 @@ class Install extends AbstractInstall
             $employee->bo_theme = 'default';
             $employee->default_tab = 1;
             $employee->active = true;
+            $employee->optin = true;
             $employee->id_profile = 1;
             $employee->id_lang = Configuration::get('PS_LANG_DEFAULT');
             $employee->bo_menu = 1;
@@ -864,24 +865,20 @@ class Install extends AbstractInstall
             $modules = array(
                 'contactform',
                 'dashactivity',
+                'dashtrends',
                 'dashgoals',
                 'dashproducts',
-                'dashtrends',
                 'graphnvd3',
                 'gridhtml',
                 'gsitemap',
-                'pagesnotfound',
-                'productcomments',
                 'ps_banner',
                 'ps_categorytree',
                 'ps_checkpayment',
                 'ps_contactinfo',
-                'ps_crossselling',
                 'ps_currencyselector',
                 'ps_customeraccountlinks',
                 'ps_customersignin',
                 'ps_customtext',
-                'ps_dataprivacy',
                 'ps_emailsubscription',
                 'ps_facetedsearch',
                 'ps_faviconnotificationbo',
@@ -896,6 +893,7 @@ class Install extends AbstractInstall
                 'ps_socialfollow',
                 'ps_themecusto',
                 'ps_wirepayment',
+                'pagesnotfound',
                 'sekeywords',
                 'statsbestcategories',
                 'statsbestcustomers',
@@ -972,6 +970,7 @@ class Install extends AbstractInstall
             'homeslider',
             'onboarding',
             'productscategory',
+            'productcomments',
             'producttooltip',
             'sendtoafriend',
             'socialsharing',

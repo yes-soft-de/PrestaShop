@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -112,6 +112,7 @@ class ModuleTabRegister
         }
 
         $tabs = $this->addUndeclaredTabs($module->get('name'), $module->getInstance()->getTabs());
+
         foreach ($tabs as $tab) {
             try {
                 $this->registerTab($module, new ParameterBag($tab));
@@ -119,14 +120,6 @@ class ModuleTabRegister
                 $this->logger->error($e->getMessage());
             }
         }
-    }
-
-    /**
-     * @param Module $module
-     */
-    public function enableTabs(Module $module)
-    {
-        $this->tabRepository->changeEnabledByModuleName($module->get('name'), true);
     }
 
     /**
@@ -183,7 +176,7 @@ class ModuleTabRegister
             throw new Exception('Missing class name of tab');
         }
         // Check controller exists
-        if (empty($data->get('route_name')) && !in_array($className . 'Controller.php', $this->getModuleAdminControllersFilename($moduleName))) {
+        if (!in_array($className . 'Controller.php', $this->getModuleAdminControllersFilename($moduleName))) {
             throw new Exception(sprintf('Class "%sController" not found in controllers/admin', $className));
         }
         // Deprecation check
@@ -290,9 +283,7 @@ class ModuleTabRegister
          */
         $tab = new Tab();
         $tab->active = $tabDetails->getBoolean('visible', true);
-        $tab->enabled = true;
         $tab->class_name = $tabDetails->get('class_name');
-        $tab->route_name = $tabDetails->get('route_name');
         $tab->module = $module->get('name');
         $tab->name = $this->getTabNames($tabDetails->get('name', $tab->class_name));
         $tab->icon = $tabDetails->get('icon');

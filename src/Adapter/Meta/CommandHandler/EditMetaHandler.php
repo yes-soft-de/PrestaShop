@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -27,7 +27,6 @@
 namespace PrestaShop\PrestaShop\Adapter\Meta\CommandHandler;
 
 use Meta;
-use PrestaShop\PrestaShop\Adapter\Meta\MetaDataProvider;
 use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\DefaultLanguage;
 use PrestaShop\PrestaShop\Core\ConstraintValidator\Constraints\IsUrlRewrite;
 use PrestaShop\PrestaShop\Core\Domain\Meta\Command\EditMetaCommand;
@@ -52,20 +51,11 @@ final class EditMetaHandler implements EditMetaHandlerInterface
     private $validator;
 
     /**
-     * @var MetaDataProvider
-     */
-    private $metaDataProvider;
-
-    /**
      * @param ValidatorInterface $validator
-     * @param MetaDataProvider $metaDataProvider
      */
-    public function __construct(
-        ValidatorInterface $validator,
-        MetaDataProvider $metaDataProvider
-    ) {
+    public function __construct(ValidatorInterface $validator)
+    {
         $this->validator = $validator;
-        $this->metaDataProvider = $metaDataProvider;
     }
 
     /**
@@ -85,7 +75,6 @@ final class EditMetaHandler implements EditMetaHandlerInterface
             }
 
             if (null !== $command->getPageName()) {
-                $this->assertIsValidPageName($entity->page, $command);
                 $entity->page = $command->getPageName()->getValue();
             }
 
@@ -168,32 +157,6 @@ final class EditMetaHandler implements EditMetaHandlerInterface
                     MetaConstraintException::INVALID_URL_REWRITE
                 );
             }
-        }
-    }
-
-    /**
-     * @param $alreadyExistingPage
-     * @param EditMetaCommand $command
-     *
-     * @throws MetaConstraintException
-     */
-    private function assertIsValidPageName($alreadyExistingPage, EditMetaCommand $command)
-    {
-        if ($command->getPageName()->getValue() === $alreadyExistingPage) {
-            return;
-        }
-
-        $availablePages = $this->metaDataProvider->getAvailablePages();
-
-        if (!in_array($command->getPageName()->getValue(), $availablePages, true)) {
-            throw new MetaConstraintException(
-                sprintf(
-                    'Given page name %s is not available. Available values are %s',
-                    $command->getPageName()->getValue(),
-                    var_export($availablePages, true)
-                ),
-                MetaConstraintException::INVALID_PAGE_NAME
-            );
         }
     }
 }

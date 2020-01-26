@@ -1,5 +1,5 @@
 {#**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -23,7 +23,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *#}
 
-{% set displayAction = action|title|replace({'_': " "})|trans({}, transDomain[action]) %}
+{% set displayAction = action|capitalize|replace({'_': " "})|trans({}, 'Admin.Actions') %}
 
 {% if (action == 'configure') %}
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -40,7 +40,6 @@ use Group;
 use Language;
 use Link;
 use Order;
-use PrestaShop\PrestaShop\Adapter\LegacyContext;
 use PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult\AddressInformation;
 use PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult\BoughtProductInformation;
 use PrestaShop\PrestaShop\Core\Domain\Customer\QueryResult\CartInformation;
@@ -62,7 +61,6 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\Exception\CustomerNotFoundExcepti
 use PrestaShop\PrestaShop\Core\Domain\Customer\Query\GetCustomerForViewing;
 use PrestaShop\PrestaShop\Core\Domain\Customer\QueryHandler\GetCustomerForViewingHandlerInterface;
 use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\CustomerId;
-use PrestaShop\PrestaShop\Core\Localization\Locale;
 use Product;
 use Referrer;
 use Shop;
@@ -77,11 +75,6 @@ use Validate;
  */
 final class GetCustomerForViewingHandler implements GetCustomerForViewingHandlerInterface
 {
-    /**
-     * @var LegacyContext
-     */
-    private $context;
-
     /**
      * @var int
      */
@@ -98,27 +91,18 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
     private $link;
 
     /**
-     * @var Locale
-     */
-    private $locale;
-
-    /**
      * @param TranslatorInterface $translator
      * @param int $contextLangId
      * @param Link $link
-     * @param Locale $locale
      */
     public function __construct(
         TranslatorInterface $translator,
         $contextLangId,
-        Link $link,
-        Locale $locale
+        Link $link
     ) {
-        $this->context = new LegacyContext();
         $this->contextLangId = $contextLangId;
         $this->translator = $translator;
         $this->link = $link;
-        $this->locale = $locale;
     }
 
     /**
@@ -258,9 +242,9 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
 
         foreach ($orders as $order) {
             $order['total_paid_real_not_formated'] = $order['total_paid_real'];
-            $order['total_paid_real'] = $this->locale->formatPrice(
+            $order['total_paid_real'] = Tools::displayPrice(
                 $order['total_paid_real'],
-                Currency::getIsoCodeById((int) $order['id_currency'])
+                new Currency((int) $order['id_currency'])
             );
 
             if (!isset($order['order_state'])) {
@@ -289,7 +273,7 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
         }
 
         return new OrdersInformation(
-            $this->locale->formatPrice($totalSpent, $this->context->getContext()->currency->iso_code),
+            Tools::displayPrice($totalSpent),
             $validOrders,
             $invalidOrders
         );
@@ -318,7 +302,7 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
             $customerCarts[] = new CartInformation(
                 sprintf('%06d', $cart->id),
                 Tools::displayDate($cart->date_add, null, true),
-                $this->locale->formatPrice($summary['total_price'], $currency->iso_code),
+                Tools::displayPrice($summary['total_price'], $currency),
                 $carrier->name
             );
         }

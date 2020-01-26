@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -152,6 +152,9 @@ final class EmployeeType extends AbstractType
         }
 
         $builder
+            ->add('optin', SwitchType::class, [
+                'required' => false,
+            ])
             ->add('default_page', ChoiceType::class, [
                 'choices' => $this->tabChoices,
             ])

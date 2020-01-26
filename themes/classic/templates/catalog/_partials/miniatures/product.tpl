@@ -1,5 +1,5 @@
 {**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -23,20 +23,16 @@
  * International Registered Trademark & Property of PrestaShop SA
  *}
 {block name='product_miniature_item'}
-<div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-  <meta itemprop="position" content="{$position}" />
-  <article class="product-miniature js-product-miniature" data-id-product="{$product.id_product}" data-id-product-attribute="{$product.id_product_attribute}" itemprop="item" itemscope itemtype="http://schema.org/Product">
+  <article class="product-miniature js-product-miniature" data-id-product="{$product.id_product}" data-id-product-attribute="{$product.id_product_attribute}" itemscope itemtype="http://schema.org/Product">
     <div class="thumbnail-container">
       {block name='product_thumbnail'}
         {if $product.cover}
-          {assign var='coverImage' value=Product::getCover($product->id)}
-          {assign var='coverImageId' value="{$product->id}-{$coverImage.id_image}"}
           <a href="{$product.url}" class="thumbnail product-thumbnail">
             <img
-              src="{$link->getImageLink($product.link_rewrite, $coverImageId)}"
+              src="{$product.cover.bySize.home_default.url}"
               alt="{if !empty($product.cover.legend)}{$product.cover.legend}{else}{$product.name|truncate:30:'...'}{/if}"
               data-full-size-image-url="{$product.cover.large.url}"
-              />
+            />
           </a>
         {else}
           <a href="{$product.url}" class="thumbnail product-thumbnail">
@@ -48,9 +44,9 @@
       <div class="product-description">
         {block name='product_name'}
           {if $page.page_name == 'index'}
-            <h3 class="h3 product-title" itemprop="name"><a href="{$product.url}" itemprop="url" content="{$product.url}">{$product.name|truncate:30:'...'}</a></h3>
+            <h3 class="h3 product-title" itemprop="name"><a href="{$product.url}">{$product.name|truncate:30:'...'}</a></h3>
           {else}
-            <h2 class="h3 product-title" itemprop="name"><a href="{$product.url}" itemprop="url" content="{$product.url}">{$product.name|truncate:30:'...'}</a></h2>
+            <h2 class="h3 product-title" itemprop="name"><a href="{$product.url}">{$product.name|truncate:30:'...'}</a></h2>
           {/if}
         {/block}
 
@@ -60,7 +56,8 @@
               {if $product.has_discount}
                 {hook h='displayProductPriceBlock' product=$product type="old_price"}
 
-                <span class="regular-price" aria-label="{l s='Regular price' d='Shop.Theme.Catalog'}">{$product.regular_price}</span>
+                <span class="sr-only">{l s='Regular price' d='Shop.Theme.Catalog'}</span>
+                <span class="regular-price">{$product.regular_price}</span>
                 {if $product.discount_type === 'percentage'}
                   <span class="discount-percentage discount-product">{$product.discount_percentage}</span>
                 {elseif $product.discount_type === 'amount'}
@@ -70,11 +67,8 @@
 
               {hook h='displayProductPriceBlock' product=$product type="before_price"}
 
-              <span class="price" aria-label="{l s='Price' d='Shop.Theme.Catalog'}">{$product.price}</span>
-              <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="invisible">
-                <meta itemprop="priceCurrency" content="{$currency.iso_code}" />
-                <meta itemprop="price" content="{$product.price_amount}" />
-              </div>
+              <span class="sr-only">{l s='Price' d='Shop.Theme.Catalog'}</span>
+              <span itemprop="price" class="price">{$product.price}</span>
 
               {hook h='displayProductPriceBlock' product=$product type='unit_price'}
 
@@ -88,7 +82,14 @@
         {/block}
       </div>
 
-      {include file='catalog/_partials/product-flags.tpl'}
+      <!-- @todo: use include file='catalog/_partials/product-flags.tpl'} -->
+      {block name='product_flags'}
+        <ul class="product-flags">
+          {foreach from=$product.flags item=flag}
+            <li class="product-flag {$flag.type}">{$flag.label}</li>
+          {/foreach}
+        </ul>
+      {/block}
 
       <div class="highlighted-informations{if !$product.main_variants} no-variants{/if} hidden-sm-down">
         {block name='quick_view'}
@@ -105,5 +106,4 @@
       </div>
     </div>
   </article>
-</div>
 {/block}

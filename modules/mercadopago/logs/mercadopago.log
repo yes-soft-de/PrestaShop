@@ -1,0 +1,55 @@
+[2019-12-26 14:38:26] [INFO]: Mercadopago plugin installed in the store
+[2019-12-26 14:41:23] [ERROR]: API application_search_owner_id error: You must send a parameter to search
+[2019-12-26 14:41:24] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2019-12-26 14:41:25] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2019-12-26 14:41:26] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2019-12-26 14:43:42] [ERROR]: API save_api_settings error: Invalid caller.id
+[2019-12-26 14:43:42] [INFO]: Country saved successfully
+[2019-12-26 14:43:42] [ERROR]: API application_search_owner_id error: You must send a parameter to search
+[2019-12-26 14:43:43] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2019-12-26 14:43:44] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2019-12-26 14:43:45] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-13 07:55:15] [ERROR]: API application_search_owner_id error: You must send a parameter to search
+[2020-01-13 07:55:16] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-13 07:55:17] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-13 07:55:18] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-13 07:57:13] [ERROR]: API application_search_owner_id error: You must send a parameter to search
+[2020-01-13 07:57:14] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-13 07:57:15] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-13 07:57:16] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-13 15:55:10] [ERROR]: API application_search_owner_id error: You must send a parameter to search
+[2020-01-13 15:55:11] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-13 15:55:12] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-13 15:55:13] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-13 16:07:30] [ERROR]: API application_search_owner_id error: You must send a parameter to search
+[2020-01-13 16:07:31] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-13 16:07:32] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-13 16:07:33] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-22 12:53:03] [INFO]: Mercadopago plugin installed in the store
+[2020-01-22 12:53:30] [ERROR]: API application_search_owner_id error: You must send a parameter to search
+[2020-01-22 12:53:30] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-22 12:53:30] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-22 12:53:31] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-22 12:54:01] [ERROR]: API application_search_owner_id error: You must send a parameter to search
+[2020-01-22 12:54:02] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-22 12:54:02] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-22 12:54:02] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-22 12:54:38] [ERROR]: API valid_access_token error: The User ID must match the consultant's
+[2020-01-22 12:54:38] [ERROR]: API valid_access_token error: The User ID must match the consultant's
+[2020-01-22 12:54:38] [WARNING]: Invalid APP_USR credentials submitted
+[2020-01-22 12:54:38] [WARNING]: Invalid TEST credentials submitted
+[2020-01-22 12:54:39] [ERROR]: API application_search_owner_id error: You must send a parameter to search
+[2020-01-22 12:54:39] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-22 12:54:39] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-22 12:54:39] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-22 14:01:06] [ERROR]: API application_search_owner_id error: You must send a parameter to search
+[2020-01-22 14:01:06] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-22 14:01:06] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-22 14:01:06] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-23 12:09:00] [ERROR]: API application_search_owner_id error: You must send a parameter to search
+[2020-01-23 12:09:00] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-23 12:09:00] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-23 12:09:01] [ERROR]: API get_payment_methods error: neither a public key nor caller id were provided
+[2020-01-23 12:47:43] [INFO]: Credentials saved successfully
+[2020-01-23 13:31:43] [INFO]: Credentials saved successfully
+[2020-01-23 13:32:22] [INFO]: Basic configuration saved successfully

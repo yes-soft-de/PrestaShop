@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -331,16 +331,18 @@ class ShopCore extends ObjectModel
         if (!($id_shop = Tools::getValue('id_shop')) || defined('_PS_ADMIN_DIR_')) {
             $found_uri = '';
             $is_main_uri = false;
-            $host = Tools::getHttpHost(false, false, true);
+            $host = Tools::getHttpHost();
             $request_uri = rawurldecode($_SERVER['REQUEST_URI']);
 
-            $result = self::findShopByHost($host);
+            $sql = 'SELECT s.id_shop, CONCAT(su.physical_uri, su.virtual_uri) AS uri, su.domain, su.main
+                    FROM ' . _DB_PREFIX_ . 'shop_url su
+                    LEFT JOIN ' . _DB_PREFIX_ . 'shop s ON (s.id_shop = su.id_shop)
+                    WHERE (su.domain = \'' . pSQL($host) . '\' OR su.domain_ssl = \'' . pSQL($host) . '\')
+                        AND s.active = 1
+                        AND s.deleted = 0
+                    ORDER BY LENGTH(CONCAT(su.physical_uri, su.virtual_uri)) DESC';
 
-            // If could not find a matching, try with port
-            if (empty($result)) {
-                $host = Tools::getHttpHost(false, false, false);
-                $result = self::findShopByHost($host);
-            }
+            $result = Db::getInstance()->executeS($sql);
 
             $through = false;
             foreach ($result as $row) {
@@ -1319,27 +1321,5 @@ class ShopCore extends ObjectModel
             ($active ? ' AND entity.`active` = 1' : '') .
             ($delete ? ' AND entity.deleted = 0' : '')
         );
-    }
-
-    /**
-     * @param string $host
-     *
-     * @return array
-     *
-     * @throws PrestaShopDatabaseException
-     */
-    private static function findShopByHost($host)
-    {
-        $sql = 'SELECT s.id_shop, CONCAT(su.physical_uri, su.virtual_uri) AS uri, su.domain, su.main
-                    FROM ' . _DB_PREFIX_ . 'shop_url su
-                    LEFT JOIN ' . _DB_PREFIX_ . 'shop s ON (s.id_shop = su.id_shop)
-                    WHERE (su.domain = \'' . pSQL($host) . '\' OR su.domain_ssl = \'' . pSQL($host) . '\')
-                        AND s.active = 1
-                        AND s.deleted = 0
-                    ORDER BY LENGTH(CONCAT(su.physical_uri, su.virtual_uri)) DESC';
-
-        $result = Db::getInstance()->executeS($sql);
-
-        return $result;
     }
 }

@@ -1,5 +1,5 @@
 {**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -57,7 +57,14 @@
         {block name='page_content_container'}
           <section class="page-content" id="content">
             {block name='page_content'}
-              {include file='catalog/_partials/product-flags.tpl'}
+              <!-- @todo: use include file='catalog/_partials/product-flags.tpl'} -->
+              {block name='product_flags'}
+                <ul class="product-flags">
+                  {foreach from=$product.flags item=flag}
+                    <li class="product-flag {$flag.type}">{$flag.label}</li>
+                  {/foreach}
+                </ul>
+              {/block}
 
               {block name='product_cover_thumbnails'}
                 {include file='catalog/_partials/product-cover-thumbnails.tpl'}
@@ -83,7 +90,7 @@
 
           <div class="product-information">
             {block name='product_description_short'}
-              <div id="product-description-short-{$product.id}" class="product-description" itemprop="description">{$product.description_short nofilter}</div>
+              <div id="product-description-short-{$product.id}" itemprop="description">{$product.description_short nofilter}</div>
             {/block}
 
             {if $product.is_customizable && count($product.customizations.fields)}
@@ -109,7 +116,7 @@
                         <p class="h4">{l s='This pack contains' d='Shop.Theme.Catalog'}</p>
                         {foreach from=$packItems item="product_pack"}
                           {block name='product_miniature'}
-                            {include file='catalog/_partials/miniatures/pack-product.tpl' product=$product_pack showPackProductsPrice=$product.show_price}
+                            {include file='catalog/_partials/miniatures/pack-product.tpl' product=$product_pack}
                           {/block}
                         {/foreach}
                     </section>
@@ -203,7 +210,7 @@
                          {foreach from=$product.attachments item=attachment}
                            <div class="attachment">
                              <h4><a href="{url entity='attachment' params=['id_attachment' => $attachment.id_attachment]}">{$attachment.name}</a></h4>
-                             <p>{$attachment.description}</p>
+                             <p>{$attachment.description}</p
                              <a href="{url entity='attachment' params=['id_attachment' => $attachment.id_attachment]}">
                                {l s='Download' d='Shop.Theme.Actions'} ({$attachment.file_size_formatted})
                              </a>
@@ -230,10 +237,10 @@
       {if $accessories}
         <section class="product-accessories clearfix">
           <p class="h5 text-uppercase">{l s='You might also like' d='Shop.Theme.Catalog'}</p>
-          <div class="products" itemscope itemtype="http://schema.org/ItemList">
-            {foreach from=$accessories item="product_accessory" key="position"}
+          <div class="products">
+            {foreach from=$accessories item="product_accessory"}
               {block name='product_miniature'}
-                {include file='catalog/_partials/miniatures/product.tpl' product=$product_accessory position=$position}
+                {include file='catalog/_partials/miniatures/product.tpl' product=$product_accessory}
               {/block}
             {/foreach}
           </div>

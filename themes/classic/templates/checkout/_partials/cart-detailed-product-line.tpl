@@ -1,5 +1,5 @@
 {**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -23,14 +23,14 @@
  * International Registered Trademark & Property of PrestaShop SA
  *}
 <div class="product-line-grid">
-  <!--  product line left content: image-->
+  <!--  product left content: image-->
   <div class="product-line-grid-left col-md-3 col-xs-4">
     <span class="product-image media-middle">
       <img src="{$product.cover.bySize.cart_default.url}" alt="{$product.name|escape:'quotes'}">
     </span>
   </div>
 
-  <!--  product line body: label, discounts, price, attributes, customizations -->
+  <!--  product left body: description -->
   <div class="product-line-grid-body col-md-4 col-xs-8">
     <div class="product-line-info">
       <a class="label" href="{$product.url}" data-id_customization="{$product.id_customization|intval}">{$product.name}</a>
@@ -77,7 +77,7 @@
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="{l s='Close' d='Shop.Theme.Global'}">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                   <h4 class="modal-title">{l s='Product customization' d='Shop.Theme.Catalog'}</h4>
@@ -110,7 +110,7 @@
     {/if}
   </div>
 
-  <!--  product line right content: actions (quantity, delete), price -->
+  <!--  product left body: description -->
   <div class="product-line-grid-right product-line-actions col-md-5 col-xs-12">
     <div class="row">
       <div class="col-xs-4 hidden-md-up"></div>
@@ -129,6 +129,7 @@
                 type="number"
                 value="{$product.quantity}"
                 name="product-quantity-spin"
+                min="{$product.minimal_quantity}"
               />
             {/if}
           </div>

@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -142,7 +142,6 @@ class AdminImportControllerCore extends AdminController
                     'reference' => array('label' => $this->trans('Reference', array(), 'Admin.Global')),
                     'ean13' => array('label' => $this->trans('EAN13', array(), 'Admin.Advparameters.Feature')),
                     'upc' => array('label' => $this->trans('UPC', array(), 'Admin.Advparameters.Feature')),
-                    'mpn' => array('label' => $this->trans('MPN', array(), 'Admin.Advparameters.Feature')),
                     'wholesale_price' => array('label' => $this->trans('Cost price', array(), 'Admin.Catalog.Feature')),
                     'price' => array('label' => $this->trans('Impact on price', array(), 'Admin.Catalog.Feature')),
                     'ecotax' => array('label' => $this->trans('Ecotax', array(), 'Admin.Catalog.Feature')),
@@ -181,7 +180,6 @@ class AdminImportControllerCore extends AdminController
                     'supplier_reference' => '',
                     'ean13' => '',
                     'upc' => '',
-                    'mpn' => '',
                     'wholesale_price' => 0,
                     'price' => 0,
                     'ecotax' => 0,
@@ -256,7 +254,6 @@ class AdminImportControllerCore extends AdminController
                     'manufacturer' => array('label' => $this->trans('Brand', array(), 'Admin.Global')),
                     'ean13' => array('label' => $this->trans('EAN13', array(), 'Admin.Advparameters.Feature')),
                     'upc' => array('label' => $this->trans('UPC', array(), 'Admin.Advparameters.Feature')),
-                    'mpn' => array('label' => $this->trans('MPN', array(), 'Admin.Advparameters.Feature')),
                     'ecotax' => array('label' => $this->trans('Ecotax', array(), 'Admin.Catalog.Feature')),
                     'width' => array('label' => $this->trans('Width', array(), 'Admin.Global')),
                     'height' => array('label' => $this->trans('Height', array(), 'Admin.Global')),
@@ -695,8 +692,8 @@ class AdminImportControllerCore extends AdminController
         $this->addJqueryPlugin(array('fancybox'));
 
         $entity_selected = 0;
-        if (isset($this->entities[$this->trans(Tools::ucfirst(Tools::getValue('import_type')))])) {
-            $entity_selected = $this->entities[$this->trans(Tools::ucfirst(Tools::getValue('import_type')))];
+        if (isset($this->entities[$this->l(Tools::ucfirst(Tools::getValue('import_type')))])) {
+            $entity_selected = $this->entities[$this->l(Tools::ucfirst(Tools::getValue('import_type')))];
             $this->context->cookie->entity_selected = (int) $entity_selected;
         } elseif (isset($this->context->cookie->entity_selected)) {
             $entity_selected = (int) $this->context->cookie->entity_selected;
@@ -1347,20 +1344,17 @@ class AdminImportControllerCore extends AdminController
             }
 
             $info = AdminImportController::getMaskedRow($line);
-            try {
-                $this->categoryImportOne(
-                    $info,
-                    $default_language_id,
-                    $id_lang,
-                    $force_ids,
-                    $regenerate,
-                    $shop_is_feature_active,
-                    $cat_moved, // by ref
-                    $validateOnly
-                );
-            } catch (Exception $exc) {
-                $this->errors[] = $exc->getMessage();
-            }
+
+            $this->categoryImportOne(
+                $info,
+                $default_language_id,
+                $id_lang,
+                $force_ids,
+                $regenerate,
+                $shop_is_feature_active,
+                $cat_moved, // by ref
+                $validateOnly
+            );
         }
 
         $this->closeCsvFile($handle);

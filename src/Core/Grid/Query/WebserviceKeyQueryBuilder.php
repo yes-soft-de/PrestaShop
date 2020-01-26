@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -28,8 +28,6 @@ namespace PrestaShop\PrestaShop\Core\Grid\Query;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
-use PrestaShop\PrestaShop\Core\Grid\Query\Filter\DoctrineFilterApplicatorInterface;
-use PrestaShop\PrestaShop\Core\Grid\Query\Filter\SqlFilters;
 use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 
 /**
@@ -48,31 +46,22 @@ final class WebserviceKeyQueryBuilder extends AbstractDoctrineQueryBuilder
     private $contextShopIds;
 
     /**
-     * @var DoctrineFilterApplicatorInterface
-     */
-    private $doctrineFilterApplicator;
-
-    /**
      * WebserviceKeyQueryBuilder constructor.
      *
      * @param Connection $connection
      * @param $dbPrefix
      * @param DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator
      * @param array $contextShopIds
-     * @param DoctrineFilterApplicatorInterface $doctrineFilterApplicator
      */
     public function __construct(
         Connection $connection,
         $dbPrefix,
         DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        array $contextShopIds,
-        DoctrineFilterApplicatorInterface $doctrineFilterApplicator
+        array $contextShopIds
     ) {
         parent::__construct($connection, $dbPrefix);
         $this->searchCriteriaApplicator = $searchCriteriaApplicator;
         $this->contextShopIds = $contextShopIds;
-        $this->connection = $connection;
-        $this->doctrineFilterApplicator = $doctrineFilterApplicator;
     }
 
     /**
@@ -121,18 +110,22 @@ final class WebserviceKeyQueryBuilder extends AbstractDoctrineQueryBuilder
                 $this->dbPrefix . 'webservice_account_shop',
                 'was',
                 'was.`id_webservice_account` = wa.`id_webservice_account`'
-            )
-            ->andWhere('was.`id_shop` IN (:shops)')
-            ->setParameter('shops', $this->contextShopIds, Connection::PARAM_INT_ARRAY)
-        ;
+            );
 
-        $sqlFilters = (new SqlFilters())
-            ->addFilter('key', 'wa.key', SqlFilters::WHERE_LIKE)
-            ->addFilter('active', 'wa.active', SqlFilters::WHERE_STRICT)
-            ->addFilter('description', 'wa.description', SqlFilters::WHERE_LIKE)
-        ;
+        $qb->andWhere('was.`id_shop` IN (:shops)');
 
-        $this->doctrineFilterApplicator->apply($qb, $sqlFilters, $filters);
+        $qb->setParameter('shops', $this->contextShopIds, Connection::PARAM_INT_ARRAY);
+
+        foreach ($filters as $filterName => $value) {
+            if ('active' === $filterName && is_numeric($value)) {
+                $qb->andWhere('wa.`active`=' . (int) $value);
+
+                continue;
+            }
+
+            $qb->andWhere('wa.`' . $filterName . '` LIKE :' . $filterName);
+            $qb->setParameter($filterName, '%' . $value . '%');
+        }
 
         return $qb;
     }

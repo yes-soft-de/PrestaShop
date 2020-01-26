@@ -1,5 +1,5 @@
 {**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -63,11 +63,11 @@
         </div>
         <footer id="about-{$store.id}" class="collapse">
           <div class="store-item-footer divide-top">
-            {if $store.note}
-              <div class="card-block">
-                <p class="text-justify">{$store.note}</p>
-              </div>
-            {/if}
+            <div class="card-block">
+              {if $store.note}
+                <p class="text-justify">{$store.note}<p>
+              {/if}
+            </div>
             <ul class="card-block">
               {if $store.phone}
                 <li><i class="material-icons">&#xE0B0;</i>{$store.phone}</li>

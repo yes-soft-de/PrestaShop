@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -50,15 +50,10 @@ abstract class AbstractAssetManagerCore
 
     abstract protected function getList();
 
-    /**
-     * @param string $relativePath
-     *
-     * @return bool|string
-     */
-    public function getFullPath(string $relativePath)
+    protected function getFullPath($relativePath)
     {
         foreach ($this->getDirectories() as $baseDir) {
-            $fullPath = $baseDir . ltrim($relativePath, '/'); // not DIRECTORY_SEPARATOR because, it's path included manually
+            $fullPath = $baseDir . ltrim($relativePath, '/'); // not DIRECTORY_SEPARATOR because, it's path included manualy
             if (file_exists($this->getPathFromUri($fullPath))) {
                 return $fullPath;
             }

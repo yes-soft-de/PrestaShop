@@ -5,6 +5,7 @@
 	</currencies>
 	<languages>
 		<language iso_code="ar" />
+		<language iso_code="fr" />
 	</languages>
 	<taxes>
 		<tax id="1" name="TVA DZ 19%" rate="19" />

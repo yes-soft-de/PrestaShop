@@ -1,0 +1,25 @@
+<?php return array (
+  'parameters' => 
+  array (
+    'database_host' => '127.0.0.1',
+    'database_port' => '',
+    'database_name' => 'agoraChegou',
+    'database_user' => 'agora1',
+    'database_password' => 'agoraChegou12345',
+    'database_prefix' => 'ps_',
+    'database_engine' => 'InnoDB',
+    'mailer_transport' => 'smtp',
+    'mailer_host' => '127.0.0.1',
+    'mailer_user' => NULL,
+    'mailer_password' => NULL,
+    'secret' => 'Jjc4tpno7IoOPhZj7VRN8ZCrHBbiOZMVjJIkYDvoU7X9iDcWJNj8KZE5',
+    'ps_caching' => 'CacheMemcache',
+    'ps_cache_enable' => false,
+    'ps_creation_date' => '2020-01-19',
+    'locale' => 'en-US',
+    'use_debug_toolbar' => true,
+    'cookie_key' => 'WZ6yIjYQxE3qE79Z4f1vibRLx0gn8xKGLQONDZxH8yfWpCjyVzrtFg3d',
+    'cookie_iv' => 'zotqai4u',
+    'new_cookie_key' => 'def0000093ff1ec6fcd39ee35d3796e99a91f590cd891dcb1a59072550c15381022ea483f16d6178c4996a2f59a0ba73d53c89dd31cc3bdb251ccf7889a05393d7299b20',
+  ),
+);

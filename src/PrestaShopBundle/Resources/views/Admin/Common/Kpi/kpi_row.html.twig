@@ -1,5 +1,5 @@
     {#**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -24,23 +24,23 @@
  *#}
 
 {% block kpi_row %}
-    <div class="container">
+    <div class="container-fluid">
         <div class="kpi-container">
-            <div class="row justify-content-around">
+            {% if kpiRow.allowRefresh %}
+                <div class="kpi-refresh">
+                    <button class="refresh-kpis btn btn-primary" type="button">
+                        <i class="material-icons">refresh</i>
+                    </button>
+                </div>
+            {% endif %}
+
+            <div class="row">
                 {% for kpi in kpiRow.kpis %}
-                    <div>
+                    <div class="col">
                         {{ kpi|raw }}
                     </div>
                 {% endfor %}
             </div>
         </div>
     </div>
-
-    {% if kpiRow.allowRefresh %}
-      <div class="kpi-refresh">
-        <button class="refresh-kpis btn btn-primary" type="button">
-          <i class="material-icons">refresh</i>
-        </button>
-      </div>
-    {% endif %}
 {% endblock %}

@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -629,7 +629,7 @@ final class ProductImportHandler extends AbstractImportHandler
             if ($product->tax_rate) {
                 $product->price = (float) number_format($product->price / (1 + $product->tax_rate / 100), 6, '.', '');
             }
-        } elseif (isset($product->price_tin, $product->price_tex)) {
+        } elseif (isset($product->price_tin) && isset($product->price_tex)) {
             $product->price = $product->price_tex;
         }
     }

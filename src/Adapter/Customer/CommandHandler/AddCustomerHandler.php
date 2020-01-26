@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -115,7 +115,8 @@ final class AddCustomerHandler extends AbstractCustomerHandler implements AddCus
     {
         $apeCode = null !== $command->getApeCode() ?
             $command->getApeCode()->getValue() :
-            null;
+            null
+        ;
 
         $hashedPassword = $this->hashing->hash(
             $command->getPassword()->getValue(),

@@ -1,0 +1,6 @@
+[21-Jan-2020 07:39:50 Brazil/Acre] PHP Fatal error:  Uncaught Symfony\Component\Filesystem\Exception\IOException: Cannot rename "/home/uufoidcqh3m0/public_html/var/cache/prod/translations/catalogue.pt-BR.NXhscRe.php.metaAwJJq5" to "/home/uufoidcqh3m0/public_html/var/cache/prod/translations/catalogue.pt-BR.NXhscRe.php.meta". in /home/uufoidcqh3m0/public_html/vendor/symfony/symfony/src/Symfony/Component/Filesystem/Filesystem.php:289
+Stack trace:
+#0 /home/uufoidcqh3m0/public_html/vendor/symfony/symfony/src/Symfony/Component/Filesystem/Filesystem.php(694): Symfony\Component\Filesystem\Filesystem->rename('/home/uufoidcqh...', '/home/uufoidcqh...', true)
+#1 /home/uufoidcqh3m0/public_html/vendor/symfony/symfony/src/Symfony/Component/Config/ResourceCheckerConfigCache.php(132): Symfony\Component\Filesystem\Filesystem->dumpFile('/home/uufoidcqh...', 'a:0:{}')
+#2 /home/uufoidcqh3m0/public_html/vendor/symfony/symfony/src/Symfony/Component/Translation/Translator.php(334): Symfony\Component\Config\ResourceCheckerConfigCache->write('<?php\n\nuse Symf...', Array)
+#3 /home/uufo in /home/uufoidcqh3m0/public_html/vendor/symfony/symfony/src/Symfony/Component/Filesystem/Filesystem.php on line 289

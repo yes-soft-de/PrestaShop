@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -29,7 +29,7 @@ namespace PrestaShop\PrestaShop\Adapter;
 use Combination;
 use PrestaShop\Decimal\Number;
 use PrestaShop\PrestaShop\Adapter\Product\ProductDataProvider;
-use PrestaShop\PrestaShop\Core\Localization\Locale;
+use PrestaShop\PrestaShop\Core\Localization\Locale\Repository as LocaleRepository;
 use PrestaShopBundle\Form\Admin\Type\CommonAbstractType;
 use Product;
 
@@ -53,14 +53,13 @@ class CombinationDataProvider
      */
     private $locale;
 
-    /**
-     * @param Locale $locale
-     */
-    public function __construct(Locale $locale)
+    public function __construct(LocaleRepository $repository)
     {
         $this->context = new LegacyContext();
         $this->productAdapter = new ProductDataProvider();
-        $this->locale = $locale;
+        $this->locale = $repository->getLocale(
+            $this->context->getContext()->language->getLocale()
+        );
     }
 
     /**
@@ -156,7 +155,6 @@ class CombinationDataProvider
             'attribute_ean13' => $combination['ean13'],
             'attribute_isbn' => $combination['isbn'],
             'attribute_upc' => $combination['upc'],
-            'attribute_mpn' => $combination['mpn'],
             'attribute_wholesale_price' => $combination['wholesale_price'],
             'attribute_price_impact' => $attribute_price_impact,
             'attribute_price' => $combination['price'],

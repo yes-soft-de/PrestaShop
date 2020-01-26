@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -241,10 +241,11 @@ class ProductSpecificPrice extends CommonAbstractType
             )
             ->add(
                 'sp_reduction',
-                FormType\NumberType::class,
+                FormType\MoneyType::class,
                 [
                     'label' => $this->translator->trans('Reduction', [], 'Admin.Catalog.Feature'),
                     'required' => false,
+                    'currency' => $this->currency->iso_code,
                 ]
             )
             ->add(

@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -234,7 +234,7 @@ class LegacyHookSubscriber implements EventSubscriberInterface
 
         if (is_array($hooks)) {
             foreach ($hooks as $hook) {
-                $name = strtolower($hook['name']);
+                $name = $hook['name'];
                 $id = $hook['id_hook'];
 
                 $moduleListeners = array();

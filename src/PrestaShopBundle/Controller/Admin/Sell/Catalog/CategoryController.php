@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -55,6 +55,7 @@ use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use PrestaShopBundle\Form\Admin\Sell\Category\DeleteCategoriesType;
 use PrestaShopBundle\Security\Annotation\AdminSecurity;
 use PrestaShopBundle\Security\Annotation\DemoRestricted;
+use PrestaShopBundle\Security\Voter\PageVoter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -457,21 +458,26 @@ class CategoryController extends FrameworkBundleAdminController
     /**
      * Toggle category status.
      *
-     * @AdminSecurity(
-     *     "is_granted(['update'], request.get('_legacy_controller'))",
-     *     message="You do not have permission to update this."
-     * )
-     *
+     * @param Request $request
      * @param int $categoryId
      *
      * @return JsonResponse
      */
-    public function toggleStatusAction($categoryId)
+    public function toggleStatusAction(Request $request, $categoryId)
     {
         if ($this->isDemoModeEnabled()) {
             return $this->json([
                 'status' => false,
                 'message' => $this->getDemoModeErrorMessage(),
+            ]);
+        }
+
+        $authLevel = $this->authorizationLevel($request->attributes->get('_legacy_controller'));
+
+        if (!in_array($authLevel, [PageVoter::LEVEL_UPDATE, PageVoter::LEVEL_DELETE])) {
+            return $this->json([
+                'status' => false,
+                'message' => $this->trans('You do not have permission to update this.', 'Admin.Notifications.Error'),
             ]);
         }
 

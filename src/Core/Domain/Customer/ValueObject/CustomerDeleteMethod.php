@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -64,14 +64,6 @@ class CustomerDeleteMethod
     public function isAllowedToRegisterAfterDelete()
     {
         return self::ALLOW_CUSTOMER_REGISTRATION === $this->method;
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAvailableMethods()
-    {
-        return [self::ALLOW_CUSTOMER_REGISTRATION, self::DENY_CUSTOMER_REGISTRATION];
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -214,9 +214,9 @@ class Repository implements RepositoryInterface
                 $cldrLocale,
                 $currency,
                 $this->numberGroupingUsed,
-                $this->currencyDisplayType,
-                (int) $currency->getDecimalPrecision()
+                $this->currencyDisplayType
             );
+            $thisPriceSpecification->setMaxFractionDigits((int) $currency->getDecimalPrecision());
 
             // Add the spec to the collection
             $priceSpecifications->add(

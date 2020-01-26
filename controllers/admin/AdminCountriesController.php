@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -206,9 +206,9 @@ class AdminCountriesControllerCore extends AdminController
                     'required' => true,
                     'hint' => $this->trans('Two -- or three -- letter ISO code (e.g. "us" for United States).', array(), 'Admin.International.Help'),
                     /* @TODO - add two lines for the hint? */
-                    /*'desc' => $this->trans('Two -- or three -- letter ISO code (e.g. U.S. for United States)', [], 'Admin.International.Help').'.
+                    /*'desc' => $this->l('Two -- or three -- letter ISO code (e.g. U.S. for United States)').'.
                             <a href="http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm" target="_blank">'.
-                                $this->trans('Official list here', [], 'Admin.International.Feature').'
+                                $this->l('Official list here').'
                             </a>.'*/
                 ),
                 array(
@@ -481,10 +481,10 @@ class AdminCountriesControllerCore extends AdminController
     {
         /* The following translations are needed later - don't remove the comments!
         $this->trans('Customer', array(), 'Admin.Global');
-        $this->trans('Warehouse', [], 'Admin.Global');
+        $this->l('Warehouse');
         $this->trans('Country', array(), 'Admin.Global');
-        $this->trans('State', [], 'Admin.Global');
-        $this->trans('Address', [], 'Admin.Global');
+        $this->l('State');
+        $this->l('Address');
         */
 
         $html_tabnav = '<ul class="nav nav-tabs" id="custom-address-fields">';

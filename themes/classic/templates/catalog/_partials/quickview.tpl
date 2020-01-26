@@ -1,5 +1,5 @@
 {**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -26,7 +26,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
    <div class="modal-content">
      <div class="modal-header">
-       <button type="button" class="close" data-dismiss="modal" aria-label="{l s='Close' d='Shop.Theme.Global'}">
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
          <span aria-hidden="true">&times;</span>
        </button>
      </div>
@@ -72,9 +72,7 @@
       </div>
      </div>
      <div class="modal-footer">
-        <div class="product-additional-info">
-          {hook h='displayProductAdditionalInfo' product=$product}
-        </div>
+       {hook h='displayProductAdditionalInfo' product=$product}
     </div>
    </div>
  </div>

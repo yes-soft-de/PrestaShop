@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -74,7 +74,7 @@ class Email
      */
     public function isEqualTo(Email $email)
     {
-        return strtolower($email->getValue()) === strtolower($this->getValue());
+        return $email->getValue() === $this->getValue();
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -89,7 +89,7 @@ class CurrencyDataProvider implements CurrencyDataProviderInterface
      */
     public function getCurrencyByIsoCode($isoCode, $idLang = null)
     {
-        $currencyId = Currency::getIdByIsoCode($isoCode, 0, false, true);
+        $currencyId = Currency::getIdByIsoCode($isoCode);
         if (!$currencyId) {
             return null;
         }
@@ -102,14 +102,11 @@ class CurrencyDataProvider implements CurrencyDataProviderInterface
     }
 
     /**
-     * @param string $isoCode
-     * @param string $locale
-     *
-     * @return Currency|null
+     * {@inheritdoc}
      */
     public function getCurrencyByIsoCodeAndLocale($isoCode, $locale)
     {
-        $idLang = Language::getIdByLocale($locale, true);
+        $idLang = Language::getIdByLocale($locale);
 
         return $this->getCurrencyByIsoCode($isoCode, $idLang);
     }
@@ -124,11 +121,7 @@ class CurrencyDataProvider implements CurrencyDataProviderInterface
         }
 
         $currency = $this->getCurrencyByIsoCode($isoCode, $idLang);
-        // Currently soft deleted currency are considered "absent", and when you try to reinstall
-        // it a new instance is created This is prone to error, the previously created currency
-        // should be re-enabled So perform the check here for deleted status but it should be improved
-        // (even this method should not exist)
-        if (null === $currency || $currency->deleted) {
+        if (null === $currency) {
             $currency = new Currency(null, $idLang);
         }
 

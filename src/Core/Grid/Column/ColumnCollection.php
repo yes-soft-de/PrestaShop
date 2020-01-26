@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -108,42 +108,13 @@ final class ColumnCollection extends AbstractCollection implements ColumnCollect
     }
 
     /**
-     * Move an existing Column to a specific position.
-     *
-     * @param string $id the Column ID original position in the Collection
-     * @param int $position the Column ID destination position in the Collection
-     *
-     * @return self
-     */
-    public function move($id, $position)
-    {
-        if (!isset($this->items[$id])) {
-            throw new ColumnNotFoundException(sprintf(
-                'Cannot insert new column into collection. Column with id "%s" was not found.',
-                $id
-            ));
-        }
-
-        $column = $this->items[$id];
-        unset($this->items[$id]);
-
-        $columns = array_slice($this->items, 0, $position, true) +
-            [$column->getId() => $column] +
-            array_slice($this->items, $position, null, true);
-
-        $this->items = $columns;
-
-        return $this;
-    }
-
-    /**
      * Insert new column into collection at given position.
      *
      * @param string $id Existing column id
      * @param ColumnInterface $newColumn Column to insert
      * @param string $position Position: "before" or "after"
      *
-     * @throws ColumnNotFoundException When column with given $id does not exist
+     * @throws ColumnNotFoundException When column with gieven $id does not exist
      */
     private function insertByPosition($id, ColumnInterface $newColumn, $position)
     {
@@ -162,7 +133,7 @@ final class ColumnCollection extends AbstractCollection implements ColumnCollect
 
         $columns = array_slice($this->items, 0, $existingColumnKeyPosition, true) +
             [$newColumn->getId() => $newColumn] +
-            array_slice($this->items, $existingColumnKeyPosition, null, true);
+            array_slice($this->items, $existingColumnKeyPosition, $this->count(), true);
 
         $this->items = $columns;
     }

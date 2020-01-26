@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -100,18 +100,6 @@ class CurrencyData
      */
     protected $names;
 
-    /**
-     * Currency's patterns, by locale code.
-     *
-     * eg.: $patternsUSD = [
-     *     'fr-FR' => '#,##0.00 ¤',
-     *     'en-EN' => '¤#,##0.00',
-     * ]
-     *
-     * @var string[]
-     */
-    protected $patterns;
-
     public function overrideWith(CurrencyData $currencyData)
     {
         if ($currencyData->isActive() !== null) {
@@ -131,7 +119,10 @@ class CurrencyData
         }
 
         if ($currencyData->getSymbols() !== null) {
-            $this->symbols = array_merge($this->symbols ?? [], $currencyData->getSymbols());
+            if (null === $this->symbols) {
+                $this->symbols = [];
+            }
+            $this->symbols = array_merge($this->symbols, $currencyData->getSymbols());
         }
 
         if ($currencyData->getPrecision() !== null) {
@@ -139,11 +130,10 @@ class CurrencyData
         }
 
         if ($currencyData->getNames() !== null) {
-            $this->names = array_merge($this->names ?? [], $currencyData->getNames());
-        }
-
-        if ($currencyData->getPatterns() !== null) {
-            $this->patterns = array_merge($this->patterns ?? [], $currencyData->getPatterns());
+            if (null === $this->names) {
+                $this->names = [];
+            }
+            $this->names = array_merge($this->names, $currencyData->getNames());
         }
 
         return $this;
@@ -259,25 +249,5 @@ class CurrencyData
     public function setNames($names)
     {
         $this->names = $names;
-    }
-
-    /**
-     * Currency patterns, indexed by locale code
-     *
-     * @return string[]|null
-     */
-    public function getPatterns(): ?array
-    {
-        return $this->patterns;
-    }
-
-    /**
-     * Currency patterns, indexed by locale code
-     *
-     * @param string[] $patterns
-     */
-    public function setPatterns(array $patterns)
-    {
-        $this->patterns = $patterns;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -144,11 +144,6 @@ class StockMvtWSCore extends ObjectModelCore
     public $upc;
 
     /**
-     * @var string MPN of the product (@see Stock::product_mpn)
-     */
-    public $mpn;
-
-    /**
      * @var string Reference of the product (@see Stock::product_reference)
      */
     public $reference;
@@ -196,7 +191,6 @@ class StockMvtWSCore extends ObjectModelCore
             'ean13' => array(),
             'upc' => array(),
             'reference' => array(),
-            'mpn' => array(),
         ),
         'hidden_fields' => array(
             'referer',
@@ -218,7 +212,6 @@ class StockMvtWSCore extends ObjectModelCore
         'management_type' => array('table' => 'w'),
         'ean13' => array('table' => 's'),
         'upc' => array('table' => 's'),
-        'mpn' => array('table' => 's'),
         'reference' => array('table' => 's'),
     );
 
@@ -250,7 +243,7 @@ class StockMvtWSCore extends ObjectModelCore
 
         if ($full) {
             $query .= ', s.id_product, s.id_product_attribute, s.id_warehouse, w.id_currency, w.management_type,
-					   s.ean13, s.upc, s.mpn, s.reference ';
+					   s.ean13, s.upc, s.reference ';
         }
 
         $old_filter = $filter;

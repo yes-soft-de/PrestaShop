@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -59,7 +59,17 @@ class ValidateConstraintTranslatorCore
 
         if ($validator === 'isCustomerName') {
             return $this->translator->trans(
-                'Invalid format.',
+                'Invalid name',
+                [],
+                'Shop.Forms.Errors'
+            ) . PHP_EOL .
+            $this->translator->trans(
+                'Invalid characters: 0-9!<>,;?=+()@#"°{}_$%/\^*`',
+                [],
+                'Shop.Forms.Errors'
+            ) . PHP_EOL .
+            $this->translator->trans(
+                'A space is required after "." and "。"',
                 [],
                 'Shop.Forms.Errors'
             );

@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -110,9 +110,6 @@ class OrderDetailCore extends ObjectModel
     public $product_upc;
 
     /** @var string */
-    public $product_mpn;
-
-    /** @var string */
     public $product_reference;
 
     /** @var string */
@@ -196,7 +193,6 @@ class OrderDetailCore extends ObjectModel
             'product_ean13' => array('type' => self::TYPE_STRING, 'validate' => 'isEan13'),
             'product_isbn' => array('type' => self::TYPE_STRING, 'validate' => 'isIsbn'),
             'product_upc' => array('type' => self::TYPE_STRING, 'validate' => 'isUpc'),
-            'product_mpn' => array('type' => self::TYPE_STRING, 'validate' => 'isMpn'),
             'product_reference' => array('type' => self::TYPE_STRING, 'validate' => 'isReference'),
             'product_supplier_reference' => array('type' => self::TYPE_STRING, 'validate' => 'isReference'),
             'product_weight' => array('type' => self::TYPE_FLOAT, 'validate' => 'isFloat'),
@@ -404,13 +400,13 @@ class OrderDetailCore extends ObjectModel
         foreach ($this->tax_calculator->getTaxesAmount($discounted_price_tax_excl) as $id_tax => $amount) {
             switch (Configuration::get('PS_ROUND_TYPE')) {
                 case Order::ROUND_ITEM:
-                    $unit_amount = (float) Tools::ps_round($amount, Context::getContext()->getComputingPrecision());
+                    $unit_amount = (float) Tools::ps_round($amount, _PS_PRICE_COMPUTE_PRECISION_);
                     $total_amount = $unit_amount * $this->product_quantity;
 
                     break;
                 case Order::ROUND_LINE:
                     $unit_amount = $amount;
-                    $total_amount = Tools::ps_round($unit_amount * $this->product_quantity, Context::getContext()->getComputingPrecision());
+                    $total_amount = Tools::ps_round($unit_amount * $this->product_quantity, _PS_PRICE_COMPUTE_PRECISION_);
 
                     break;
                 case Order::ROUND_TOTAL:
@@ -571,9 +567,9 @@ class OrderDetailCore extends ObjectModel
 
                     if ($this->specificPrice['reduction_tax']) {
                         $this->reduction_amount_tax_incl = $this->reduction_amount;
-                        $this->reduction_amount_tax_excl = Tools::ps_round($this->tax_calculator->removeTaxes($this->reduction_amount), Context::getContext()->getComputingPrecision());
+                        $this->reduction_amount_tax_excl = Tools::ps_round($this->tax_calculator->removeTaxes($this->reduction_amount), _PS_PRICE_COMPUTE_PRECISION_);
                     } else {
-                        $this->reduction_amount_tax_incl = Tools::ps_round($this->tax_calculator->addTaxes($this->reduction_amount), Context::getContext()->getComputingPrecision());
+                        $this->reduction_amount_tax_incl = Tools::ps_round($this->tax_calculator->addTaxes($this->reduction_amount), _PS_PRICE_COMPUTE_PRECISION_);
                         $this->reduction_amount_tax_excl = $this->reduction_amount;
                     }
 
@@ -690,7 +686,6 @@ class OrderDetailCore extends ObjectModel
         $this->product_ean13 = empty($product['ean13']) ? null : pSQL($product['ean13']);
         $this->product_isbn = empty($product['isbn']) ? null : pSQL($product['isbn']);
         $this->product_upc = empty($product['upc']) ? null : pSQL($product['upc']);
-        $this->product_mpn = empty($product['mpn']) ? null : pSQL($product['mpn']);
         $this->product_reference = empty($product['reference']) ? null : pSQL($product['reference']);
         $this->product_supplier_reference = empty($product['supplier_reference']) ? null : pSQL($product['supplier_reference']);
         $this->product_weight = $product['id_product_attribute'] ? (float) $product['weight_attribute'] : (float) $product['weight'];

@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop SA and Contributors
+ * 2007-2019 PrestaShop and Contributors
  *
  * NOTICE OF LICENSE
  *
@@ -233,9 +233,7 @@ class CategoryControllerCore extends ProductListingFrontController
             }
         }
 
-        if ($this->category->id_parent != 0 && !$this->category->is_root_category) {
-            $breadcrumb['links'][] = $this->getCategoryPath($this->category);
-        }
+        $breadcrumb['links'][] = $this->getCategoryPath($this->category);
 
         return $breadcrumb;
     }
