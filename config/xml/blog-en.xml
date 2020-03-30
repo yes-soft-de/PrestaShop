@@ -6,85 +6,84 @@
     <language>en</language>
      <atom:link href="https://www.prestashop.com/en/blog/feed.xml" rel="self" type="application/rss+xml" />
       <item>
-    <title>Understanding your e-commerce activity: 5 templates for Google Analytics reports</title>
-    <link>https://www.prestashop.com/en/blog/5-templates-for-google-analytics-reports</link>
-    <description>The first impression which we get when someone talks about e-commerce is very much coherent for all of us.</description>
-     <pubDate>Thu, 16 Jan 2020 18:09:57 +0100</pubDate>
+    <title>A brief guide to AI advertising for Ecommerce</title>
+    <link>https://www.prestashop.com/en/blog/ai-advertising-ecommerce</link>
+    <description>It’s no secret that Artificial Intelligence (AI) is completely revolutionizing the world of online advertising. </description>
+     <pubDate>Mon, 23 Mar 2020 17:49:09 +0100</pubDate>
+ <dc:creator>Amit Roznak</dc:creator>
+ <guid isPermaLink="false">https://www.prestashop.com/en/blog/ai-advertising-ecommerce</guid>
+  </item>
+  <item>
+    <title>COVID-19: practical tips for online retailers</title>
+    <link>https://www.prestashop.com/en/blog/coronavirus-tips</link>
+    <description>The consequences linked to the health situation are evolving day by day, and some areas of uncertainty remain to be defined.</description>
+     <pubDate>Fri, 20 Mar 2020 12:13:00 +0100</pubDate>
+ <dc:creator>PrestaShop Team</dc:creator>
+ <guid isPermaLink="false">https://www.prestashop.com/en/blog/coronavirus-tips</guid>
+  </item>
+  <item>
+    <title>COVID-19: shipping and delivery situation dashboard</title>
+    <link>https://www.prestashop.com/en/blog/shipping-delivery-dashboard</link>
+    <description>Updated March 23rd.</description>
+     <pubDate>Thu, 19 Mar 2020 16:34:55 +0100</pubDate>
+ <dc:creator>PrestaShop Team</dc:creator>
+ <guid isPermaLink="false">https://www.prestashop.com/en/blog/shipping-delivery-dashboard</guid>
+  </item>
+  <item>
+    <title>The search engine, a strategic feature of your e-shop</title>
+    <link>https://www.prestashop.com/en/blog/search-engine-e-shop</link>
+    <description>You have worked on the structure and contents of your catalog, put in place a detailed menu and integrated a faceted filter on your categories… But you still notice that your customers can’t always</description>
+     <pubDate>Tue, 10 Mar 2020 17:31:24 +0100</pubDate>
+ <dc:creator>Richard Stefan</dc:creator>
+ <guid isPermaLink="false">https://www.prestashop.com/en/blog/search-engine-e-shop</guid>
+  </item>
+  <item>
+    <title>The PrestaShop 2020 Must-haves</title>
+    <link>https://www.prestashop.com/en/blog/prestashop-awards-2020</link>
+    <description>The PrestaShop team is pleased to present our selection of modules and themes for your online shop.</description>
+     <pubDate>Mon, 09 Mar 2020 16:37:40 +0100</pubDate>
+ <dc:creator>PrestaShop Team</dc:creator>
+ <guid isPermaLink="false">https://www.prestashop.com/en/blog/prestashop-awards-2020</guid>
+  </item>
+  <item>
+    <title>PrestaShop has unveiled a range of new features for your online store</title>
+    <link>https://www.prestashop.com/en/blog/new-features-prestashop-2020</link>
+    <description>A wave of new features to help retailers sell better</description>
+     <pubDate>Fri, 06 Mar 2020 17:06:36 +0100</pubDate>
+ <dc:creator>PrestaShop Team</dc:creator>
+ <guid isPermaLink="false">https://www.prestashop.com/en/blog/new-features-prestashop-2020</guid>
+  </item>
+  <item>
+    <title>Social selling: what&amp;#039;s behind the latest buzz word?</title>
+    <link>https://www.prestashop.com/en/blog/social-selling-2020</link>
+    <description>I bet you’ve heard of social selling before, but you might not be completely sure what the term implies?</description>
+     <pubDate>Wed, 04 Mar 2020 17:56:26 +0100</pubDate>
+ <dc:creator>bulldesign</dc:creator>
+ <guid isPermaLink="false">https://www.prestashop.com/en/blog/social-selling-2020</guid>
+  </item>
+  <item>
+    <title>UX Pro tips to improve your menu and labels’ design</title>
+    <link>https://www.prestashop.com/en/blog/ux-tips-menu-design</link>
+    <description>User experience, or UX, is fundamentally about creating an experience that fits the needs of your visitors.</description>
+     <pubDate>Thu, 27 Feb 2020 18:05:28 +0100</pubDate>
+ <dc:creator>Vytaure Banyte</dc:creator>
+ <guid isPermaLink="false">https://www.prestashop.com/en/blog/ux-tips-menu-design</guid>
+  </item>
+  <item>
+    <title>The KPIs that matter for an online store</title>
+    <link>https://www.prestashop.com/en/blog/kpis-ecommerce</link>
+    <description>Data? What we think of the term &amp;amp; does it hold that much importance in your business? The answer is absolute “yes”.</description>
+     <pubDate>Thu, 20 Feb 2020 18:04:49 +0100</pubDate>
  <dc:creator>Webkul</dc:creator>
- <guid isPermaLink="false">https://www.prestashop.com/en/blog/5-templates-for-google-analytics-reports</guid>
+ <guid isPermaLink="false">https://www.prestashop.com/en/blog/kpis-ecommerce</guid>
   </item>
   <item>
-    <title>Five tips for setting up an effective content strategy </title>
-    <link>https://www.prestashop.com/en/blog/five-tips-for-setting-up-effective-content-strategy</link>
-    <description>Content – whether that’s a video how-to-guide, a funny post on social media about your niche, or a list of helpful pointers – helps differentiate you from other webshops, builds your brand, and dri</description>
-     <pubDate>Thu, 09 Jan 2020 14:12:31 +0100</pubDate>
- <dc:creator>Teapot</dc:creator>
- <guid isPermaLink="false">https://www.prestashop.com/en/blog/five-tips-for-setting-up-effective-content-strategy</guid>
-  </item>
-  <item>
-    <title>Security announcement: your store may be vulnerable to malware. Here is what you need to do</title>
-    <link>https://www.prestashop.com/en/security-announcement-your-store-vulnerable-malware</link>
-    <description>updated on 09/01/2020, 10 h 20
-Dear PrestaShop user,</description>
-     <pubDate>Tue, 07 Jan 2020 18:36:49 +0100</pubDate>
- <dc:creator>PrestaShop Team</dc:creator>
- <guid isPermaLink="false">https://www.prestashop.com/en/security-announcement-your-store-vulnerable-malware</guid>
-  </item>
-  <item>
-    <title>The PrestaShop year 2019 in numbers</title>
-    <link>https://www.prestashop.com/en/blog/prestashop-year-2019-in-numbers</link>
-    <description>2020 has just begun and this is a very special year to come for PrestaShop.</description>
-     <pubDate>Tue, 07 Jan 2020 16:32:09 +0100</pubDate>
- <dc:creator>PrestaShop Team</dc:creator>
- <guid isPermaLink="false">https://www.prestashop.com/en/blog/prestashop-year-2019-in-numbers</guid>
-  </item>
-  <item>
-    <title>Five steps to create your customer persona</title>
-    <link>https://www.prestashop.com/en/blog/five-steps-create-customer-persona</link>
-    <description>When we create a customer persona, we create a vivid impression of an imaginary member of our target demographic.</description>
-     <pubDate>Wed, 18 Dec 2019 14:42:55 +0100</pubDate>
- <dc:creator>Teapot</dc:creator>
- <guid isPermaLink="false">https://www.prestashop.com/en/blog/five-steps-create-customer-persona</guid>
-  </item>
-  <item>
-    <title>Online retail: a list of ten mistakes to avoid</title>
-    <link>https://www.prestashop.com/en/blog/online-retail-a-list-of-ten-mistakes-to-avoid</link>
-    <description>To convert a customer and build customer loyalty, your site should provide a flawless experience.</description>
-     <pubDate>Mon, 16 Dec 2019 12:13:47 +0100</pubDate>
- <dc:creator>PrestaShop Team</dc:creator>
- <guid isPermaLink="false">https://www.prestashop.com/en/blog/online-retail-a-list-of-ten-mistakes-to-avoid</guid>
-  </item>
-  <item>
-    <title>5 trends that will shape e-commerce in 2020</title>
-    <link>https://www.prestashop.com/en/blog/trends-e-commerce-2020</link>
-    <description>E-commerce is one of the world’s fastest-changing sectors. Every e-commerce business that wants to stay ahead has to know where things are heading. So what’s coming in 2020?</description>
-     <pubDate>Fri, 13 Dec 2019 16:21:24 +0100</pubDate>
- <dc:creator>Sophie Mirza</dc:creator>
- <guid isPermaLink="false">https://www.prestashop.com/en/blog/trends-e-commerce-2020</guid>
-  </item>
-  <item>
-    <title>The key to choosing the best domain name</title>
-    <link>https://www.prestashop.com/en/blog/choosing-best-domain-name</link>
-    <description>You&#039;ve been busy laying the foundations for your start up business, and it&#039;s time to create a website that will do your vision justice.</description>
-     <pubDate>Mon, 09 Dec 2019 15:00:47 +0100</pubDate>
- <dc:creator>Teapot</dc:creator>
- <guid isPermaLink="false">https://www.prestashop.com/en/blog/choosing-best-domain-name</guid>
-  </item>
-  <item>
-    <title>Expand your e-commerce business with local payments</title>
-    <link>https://www.prestashop.com/en/blog/expand-your-e-commerce-business-local-payments</link>
-    <description>Have you ever been in Latin America? Asia Pacific? The Middle East? Africa?</description>
-     <pubDate>Mon, 02 Dec 2019 15:00:23 +0100</pubDate>
- <dc:creator>Sharon Franko</dc:creator>
- <guid isPermaLink="false">https://www.prestashop.com/en/blog/expand-your-e-commerce-business-local-payments</guid>
-  </item>
-  <item>
-    <title>Online store: How to meet the customer’s expectations?</title>
-    <link>https://www.prestashop.com/en/blog/online-store-meet-customer-expectations</link>
-    <description>The human mind is filled with ideas and imaginations. While ideas do not cost anything, the implementation demands a lot of time, effort and money.</description>
-     <pubDate>Wed, 27 Nov 2019 14:40:31 +0100</pubDate>
- <dc:creator>NitinSrivastavaen</dc:creator>
- <guid isPermaLink="false">https://www.prestashop.com/en/blog/online-store-meet-customer-expectations</guid>
+    <title>Discover new perspectives of page building</title>
+    <link>https://www.prestashop.com/en/blog/new-perspectives-page-building</link>
+    <description>Today an increasing number of users feel that the website’s design determines whether to trust a business or not.</description>
+     <pubDate>Mon, 17 Feb 2020 12:30:30 +0100</pubDate>
+ <dc:creator>Janos Biro EN</dc:creator>
+ <guid isPermaLink="false">https://www.prestashop.com/en/blog/new-perspectives-page-building</guid>
   </item>
   </channel>
 </rss>

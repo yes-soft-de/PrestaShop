@@ -3,7 +3,7 @@
   array (
     'database_host' => '127.0.0.1',
     'database_port' => '',
-    'database_name' => 'agoraChegou',
+    'database_name' => 'devagorachegou',
     'database_user' => 'agora1',
     'database_password' => 'agoraChegou12345',
     'database_prefix' => 'ps_',

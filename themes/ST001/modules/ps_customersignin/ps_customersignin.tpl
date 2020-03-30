@@ -24,9 +24,10 @@
  *}
 <div id="_desktop_user_info">
   <div class="user-info">
-     <div class="user-icon"></div>
+{if $logged}
+   <div class="user-icon"></div>
    <ul class="userinfo-toggle">
-    {if $logged}
+
       <li>
       <a
       class="account"
@@ -44,23 +45,19 @@
       href="{$logout_url}"
       rel="nofollow"
       >
-      <!--<i class="material-icons">&#xE7FF;</i>-->
       {l s='Sign out' d='Shop.Theme.Actions'}
       </a>
       </li>
-      
+    </ul>      
     {else}
-      <li>
       <a
       href="{$my_account_url}"
-      title="{l s='Log in to your customer account' d='Shop.Theme.CustomerAccount'}"
+      title="{l s='Conecte-se' d='Shop.Theme.CustomerAccount'}"
       rel="nofollow"
       >
-      <!--<i class="material-icons">&#xE7FF;</i>-->
-      <span class="hidden-sm-down">{l s='Sign in' d='Shop.Theme.Actions'}</span>
+        <div class="user-icon"></div>    
       </a>
-      </li>
     {/if}
-   </ul>
+
   </div>
 </div>

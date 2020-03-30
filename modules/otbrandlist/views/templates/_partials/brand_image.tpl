@@ -8,7 +8,7 @@
      <li class="item">
         <a href="{$brand['link']}" title="{$brand['name']}">
          
-		   <img src="{$brand['imageurl']}" title="{$brand['name']}" /> 
+		   <img src="{$brand['imageurl']}" title="{$brand['name']}" alt="" /> 
         </a>
       </li>
     {/if}

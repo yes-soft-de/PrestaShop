@@ -24,7 +24,7 @@
  *}
 <section class="featured-products clearfix">
   <h1 class="h1 products-section-title text-uppercase">
-    {l s='Popular Products' d='Shop.Theme.Catalog'}
+    {l s='Produtos mais recentes' d='Shop.Theme.Catalog'}
   </h1>
   <div class="products">
     {foreach from=$products item="product"}

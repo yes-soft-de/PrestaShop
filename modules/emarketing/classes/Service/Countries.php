@@ -59,7 +59,6 @@ class Countries
                 'conversion_rate' => $currency['conversion_rate'],
                 'active' => $currency['active'],
                 'deleted' => $currency['deleted'],
-                'symbol' => $currency['symbol'],
                 'sign' => $currency['sign'],
                 'iso_code_num' => $currency['iso_code_num'],
                 'format' => $currency['format']

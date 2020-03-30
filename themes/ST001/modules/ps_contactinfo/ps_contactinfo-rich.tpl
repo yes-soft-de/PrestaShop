@@ -25,10 +25,12 @@
 
 <div class="contact-rich">
   <h4>{l s='Store information' d='Shop.Theme.Global'}</h4>
+  <!--
   <div class="block">
     <div class="icon"><i class="material-icons">&#xE55F;</i></div>
     <div class="data">{$contact_infos.address.formatted nofilter}</div>
   </div>
+  -->
   {if $contact_infos.phone}
     <hr/>
     <div class="block">

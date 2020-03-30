@@ -24,6 +24,24 @@
  *}
  {block name='product_miniature_item'}
 <article class="product-miniature js-product-miniature" data-id-product="{$product.id_product}" data-id-product-attribute="{$product.id_product_attribute}" itemscope itemtype="http://schema.org/Product">
+    <!-- For Google search console -->
+	<meta itemprop="image" content="{$product.cover.large.url}" />
+	<meta itemprop="description" content="{$product.manufacturer_name} {$product.name}" />
+	<meta itemprop="sku" content="{$product.reference_to_display}" />
+	<div itemprop="offers" itemtype="http://schema.org/Offer" itemscope>
+		<meta itemprop="url" content="{$product.url}" />
+		<meta itemprop="availability" content="https://schema.org/InStock" />
+		<meta itemprop="priceCurrency" content="INR" />
+		<meta itemprop="itemCondition" content="Used" />
+		<meta itemprop="price" content="{$product.price_amount}" />
+		<div itemprop="seller" itemtype="http://schema.org/Organization" itemscope>
+			<meta itemprop="name" content="THIS IS THE SELLER's ORGANIZATIONS NAME" />
+		</div>
+	</div>
+	<div itemprop="brand" itemtype="http://schema.org/Thing" itemscope>
+		<meta itemprop="name" content="{$product.manufacturer_name}" />
+	</div>
+	<!-- ./For Google search console -->
  <div class="thumbnail-container btn_hover">
     <div class="thumbnail-inner">
     

@@ -86,9 +86,12 @@ class Gateway
     {
         $data = array(
             "partner_short_name" => "prestashop",
-            "language" => "en",
+            "language" => strtolower(substr(\Language::getIsoById(\Configuration::get('PS_LANG_DEFAULT')), 0, 2)),
+            "country" => strtoupper(\Country::getIsoById(\Configuration::get('PS_COUNTRY_DEFAULT'))),
             "email" => \Configuration::get('PS_SHOP_EMAIL')
         );
+
+        $data = $this->validateRegistrationData($data);
 
         $header = "Origin: " . \Context::getContext()->shop->getBaseURL(true);
 
@@ -101,6 +104,27 @@ class Gateway
         $this->saveToken($token);
 
         return $token;
+    }
+
+    /**
+     * @param $data
+     * @return mixed
+     */
+    private function validateRegistrationData($data)
+    {
+        $schema = json_decode(file_get_contents('https://ecommerce-os.s3.eu-west-1.amazonaws.com/schema/partner.json'));
+        $languages = $schema->links[0]->schema->properties->language->enum;
+        $countries = $schema->links[0]->schema->properties->country->enum;
+
+        if (!in_array($data['language'], $languages)) {
+            $data['language'] = 'en';
+        }
+
+        if (!in_array($data['country'], $countries)) {
+            $data['country'] = 'DE';
+        }
+
+        return $data;
     }
 
     /**

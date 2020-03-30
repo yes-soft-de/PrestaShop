@@ -96,10 +96,11 @@ global_settings:
         - ps_languageselector
         - ps_currencyselector
       displayNav2:
-        - ps_searchbar
         - ps_customersignin
         - ps_shoppingcart
-      displayTop:
+      displaySearch:
+        - ps_searchbar 
+      displayMenu:
         - ps_mainmenu
       displayTopColumn:
         - othomeslider

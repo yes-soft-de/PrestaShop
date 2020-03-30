@@ -1,0 +1,22 @@
+id_product;active;name;categories;price;id_tax_rules_group;wholesale_price;reference;supplier_reference;id_supplier;id_manufacturer;upc;ecotax;weight;quantity;description_short;description;meta_title;meta_keywords;meta_description;link_rewrite;available_now;available_later;available_for_order;date_add;show_price;online_only;condition;id_shop_default
+4;1;"Notebook hp probook 640 G1";Home,HP;1400.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;notebook-hp-probook-640-g1;;;1;"2020-01-23 07:07:55";1;0;new;1
+5;1;"Hp EliteBook 820 G3";Home,HP;1700.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;hp-elitebook-820-g3-;;;1;"2020-01-23 10:22:20";1;0;new;1
+6;1;"Notebook hp probook 640 G1";Home,HP;1400.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;notebook-hp-probook-640-g1;;;1;"2020-01-23 10:42:11";1;0;new;1
+7;1;"Hp zbook 15 G1 Notebook";Home,HP;3200.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;hp-zbook-15-g1;;;1;"2020-01-23 10:48:53";1;0;new;1
+8;1;"Hp zbook 15 G1 Notebook";Home,HP;3400.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;hp-zbook-15-g1;;;1;"2020-01-23 10:58:21";1;0;new;1
+9;1;"Hp probook 640 G2 notebook";Home,HP;1600.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;notebook-hp-probook-640-g1;;;1;"2020-01-23 11:09:47";1;0;new;1
+11;1;"Hp Zbook 15 G3 Notebook";Home,HP;5000.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;hp-zbook-15-g3-netbook;;;1;"2020-01-23 12:33:39";1;0;new;1
+12;1;"Hp Zbook 15 G3 Notebook";Home,HP;5000.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;hp-zbook-15-g3-netbook;;;1;"2020-01-23 12:38:08";1;0;new;1
+13;1;"Hp ProBook 640 G2 notebook";Home,HP;1600.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;hp-probook-640-g2-notebook;;;1;"2020-01-23 12:41:26";1;0;new;1
+14;1;"Hp ProBook 640 G2 notebook";Home,HP;1700.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;hp-probook-640-g2-notebook;;;1;"2020-01-23 12:44:31";1;0;new;1
+15;1;"Hp ProBook 640 G2 notebook";Home,HP;1700.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;hp-probook-640-g2-notebook;;;1;"2020-01-23 12:46:44";1;0;new;1
+16;1;"Hp ProBook 640 G2 notebook";Home,HP;1700.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;hp-probook-640-g2-notebook;;;1;"2020-01-23 12:49:15";1;0;new;1
+17;1;"Hp ProBook 640 G2 notebook";Home,HP;1700.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;hp-probook-640-g2-notebook;;;1;"2020-01-23 12:50:56";1;0;new;1
+18;1;"Hp ProBook 640 G2 notebook";Home,HP;1700.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;hp-probook-640-g2-notebook;;;1;"2020-01-23 12:52:37";1;0;new;1
+19;1;"Notebook hp probook 640 G1";Home,HP;1400.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;notebook-hp-probook-640-g1;;;1;"2020-01-23 12:57:32";1;0;new;1
+20;1;"Hp Notebook Elitebook 820 G3";Home,HP;1700.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;hp-netbook-elitebook-820-g3;;;1;"2020-01-23 12:59:58";1;0;new;1
+21;1;"Hp Notebook Elitebook 820 G3";Home,HP;1700.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;hp-netbook-elitebook-820-g3;;;1;"2020-01-23 13:02:42";1;0;new;1
+22;1;"Hp Notebook Elitebook 820 G3";Home,HP;1700.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;hp-netbook-elitebook-820-g3;;;1;"2020-01-23 13:05:02";1;0;used;1
+23;1;"Hp Notebook Elitebook 820 G3";Home,HP;1700.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;hp-netbook-elitebook-820-g3;;;1;"2020-01-23 13:06:55";1;0;new;1
+24;1;"HP Notebook Elitebook 820 G1";Home,HP;1400.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;hp-notebook-elitebook-820-g1;;;1;"2020-01-23 13:17:11";1;0;new;1
+25;1;Test;Home,HP;10.000000;0;0.000000;;;0;2;;0.000000;0.000000;0;;;;;;hp-notebook-elitebook-820-g1;;;1;"2020-02-03 05:24:23";1;0;used;1

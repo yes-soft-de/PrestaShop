@@ -55,7 +55,7 @@ Disallow: /*controller=search
 Disallow: /*controller=statistics
 Disallow: /*controller=attachment
 Disallow: /*controller=guest-tracking
-# Directories for www.agorachegou.com.br
+# Directories for agora.yes-shop.96.lt
 Disallow: /app/
 Disallow: /cache/
 Disallow: /classes/

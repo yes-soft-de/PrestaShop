@@ -1,0 +1,10 @@
+#st_generate_info,#st_optimize_images_message{color:#ff0000;}
+.fenlei_status{margin-left: 6px;}
+#st_generate_message{max-height: 200px;overflow: auto;}
+.fenlei_current .st_loading,#st_optimize_images .st_loading{display: inline-block;}
+#st_optimize_images .st_loading,.st_loading{display: none;}
+#fenlei_info_nopictures{display: none;}
+#st_optimize_images_message{margin-top:10px;}
+#st_optimize_result{background: #daf2f8;list-style: none;}
+#st_optimize_result .info{color:#1e94ab;}
+#st_optimize_result .error{color:#ff0000;}

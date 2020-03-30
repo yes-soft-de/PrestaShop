@@ -1,0 +1,2 @@
+*ERROR* 	v1.7.6.3	2020/02/10 - 14:29:36: Link to database cannot be established: SQLSTATE[HY000] [1130] Host 'localhost' is not allowed to connect to this MySQL server at line 127 in file classes/db/DbPDO.php
+*ERROR* 	v1.7.6.3	2020/02/10 - 19:39:14: Link to database cannot be established: SQLSTATE[HY000] [1130] Host 'localhost' is not allowed to connect to this MySQL server at line 127 in file classes/db/DbPDO.php

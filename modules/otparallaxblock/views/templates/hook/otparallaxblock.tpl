@@ -24,21 +24,104 @@
 *}
 
 
+<script>
+// Set the date we're counting down to
+var countDownDate = new Date("Jan 5, 2007 15:37:25").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  if (days < 10) {
+      $('.timer .day').text('0' + days);
+  } else {
+      $('.timer .day').text(days);
+  }
+  if (hours < 10) {
+      $('.timer .hour').text('0' + hours);
+  } else {
+      $('.timer .hour').text(hours);
+  }
+  if (minutes < 10) {
+      $('.timer .minute').text('0' + minutes);
+  } else {
+      $('.timer .minute').text(minutes);
+  }
+  if (seconds < 10) {
+      $('.timer .second').text('0' + seconds);
+  } else {
+      $('.timer .second').text(seconds);
+  }
+    
+  // If the count down is over, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+      $('.timer .day').text('00');
+      $('.timer .hour').text('00');
+      $('.timer .minute').text('00');
+      $('.timer .second').text('00');
+  }
+}, 1000);
+</script>
+
 <div id="custom-parallaxblock" class="custom-parallaxblock parallaxblock-outer" data-source-url="{$module_dir}/views/img/parallax.jpg">
  <div class="parallaxblock-inner container"> 
-	{if isset($cms_parallaxinfos) && $cms_parallaxinfos}
-	{$cms_parallaxinfos.text nofilter}
-	{else}
-	<div class="parallax-block">
-	<div class="parallax-inner container-width">
-	<div class="parallax-text">
-	<div class="parallax-text2">The World’s Most<br>
-								Accurate Watch</div>
-	<div class="parallax-text3">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable..</div>
-	<div class="parallax-text4"><a href="#">View more</a></div>
+ <img src="/img/offer/04.png" class="img-side">
+	<div class="container">
+	    <div class="row">
+	        <div class="col-sm-6 col-xs-12">
+	            <p class="title">Aguarde nossas ofertas</p>
+	            <div class="timer">
+	                <ul>
+	                    <li>
+	                        <span class="day">00</span>
+	                        <span class="word">Days</span>
+	                    </li>
+	                    <li>
+	                        <span class="dots">:</span>
+	                    </li>
+	                    <li>
+	                        <span class="hour">00</span>
+	                        <span class="word">Hours</span>
+	                    </li>
+	                    <li>
+	                        <span class="dots">:</span>
+	                    </li>
+	                    <li>
+	                        <span class="minute">00</span>
+	                        <span class="word">Minutes</span>
+	                    </li>
+	                    <li>
+	                        <span class="dots">:</span>
+	                    </li>
+	                    <li>
+	                        <span class="second">00</span>
+	                        <span class="word">Seconds</span>
+	                    </li>
+	                </ul>
+	            </div>
+	            <p class="para">Economize tempo obtendo a oferta agora</p>
+	        </div>
+	        <div class="col-sm-6 col-xs-12">
+	            <div class="wrraper">
+    	            <img src="/img/offer/03.png" class="left">
+    	            <img src="/img/offer/laptop.png" class="laptop">
+    	            <img src="/img/offer/01.png" class="right">
+	            </div>
+	        </div>
+	    </div>
 	</div>
-	</div>
-	</div>
-	{/if}
  </div>
 </div>

@@ -30,29 +30,55 @@
 
 {block name='header_nav'}
   <nav class="header-nav">
+    <div class="header-bg">
+        <div class="container">
+            <div class="row">
+              <div class="hidden-sm-down">
+                <div class="header-wrapper">
+                     <div class="col-md-6 col-xs-12">
+                        {hook h='displayNav1'}
+                        <div class="logo-newdiv">
+                            <div id="_desktop_logo" >
+                              <a href="{$urls.base_url}" class="header-logo">
+                                <img class="logo img-responsive" src="{$shop.logo}" alt="{$shop.name}">
+                              </a>
+                              <span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 right-nav hidden-sm-down">
+                        {hook h='displaySearch'}
+                    </div>   
+                 </div>
+              </div>
+              <div class="hidden-md-up text-xs-center mobile">
+                <div class="float-xs-left" id="menu-icon">
+                  <i class="material-icons d-inline">&#xE5D2;</i>
+                </div>
+                <div class="float-xs-right" id="_mobile_cart"></div>
+                <div class="float-xs-right" id="_mobile_user_info"></div>
+                <div class="top-logo" id="_mobile_logo"></div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+        </div>
+    </div>
+  </nav>
+  <nav class="header-nav second-nav hidden-sm-down">
     <div class="container">
         <div class="row">
-          <div class="hidden-sm-down">
-            <div class="col-md-6 col-xs-12">
-              {hook h='displayNav1'}
+            <div class="col-md-6">
+                <div class="header-top">
+                    {hook h='displayTop'}
+                </div>
             </div>
             <div class="col-md-6 right-nav">
                 {hook h='displayNav2'}
             </div>
-          </div>
-          <div class="hidden-md-up text-xs-center mobile">
-            <div class="float-xs-left" id="menu-icon">
-              <i class="material-icons d-inline">&#xE5D2;</i>
-            </div>
-            <div class="float-xs-right" id="_mobile_cart"></div>
-            <div class="float-xs-right" id="_mobile_user_info"></div>
-            <div class="top-logo" id="_mobile_logo"></div>
-            <div class="clearfix"></div>
-          </div>
         </div>
     </div>
   </nav>
-   <div class="logo-newdiv">
+   <div class="logo-newdiv hidden-md-up">
        <div class="container">
             <div class="row">
                 <div class="col-md-4 hidden-sm-down" id="_desktop_logo" >
@@ -67,7 +93,7 @@
 {/block}
 
 {block name='header_top'}
-  <div class="header-top">
+  <div class="header-top hidden-md-up">
     <div class="container">
        <div class="row">
         

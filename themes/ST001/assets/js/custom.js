@@ -313,6 +313,6 @@ $( window ).resize(function() {
 	
 	searchwidget();
 	
-});							
+});	
 
 

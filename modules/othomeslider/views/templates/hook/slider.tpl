@@ -24,14 +24,44 @@
 *  International Registered Trademark & Property of PrestaShop SA
 *}
 
-{if $othomeslider.slides}
-  <div class="homeslider-container" data-interval="{$othomeslider.speed}" data-wrap="{$othomeslider.wrap}" data-pause="{$othomeslider.pause}">
-    <ul  id="homepage-carousel"  class="slides owl-carousel">
-      {foreach from=$othomeslider.slides item=slide}
-        <li class="slide">
-          <img src="{$slide.image_url}" alt="{$slide.legend|escape}" />
-        </li>
-      {/foreach}
-    </ul>
-  </div>
-{/if}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-xs-12">
+            {if $othomeslider.slides}
+              <div class="homeslider-container" data-interval="{$othomeslider.speed}" data-wrap="{$othomeslider.wrap}" data-pause="{$othomeslider.pause}">
+                <ul  id="homepage-carousel"  class="slides owl-carousel">
+                  {foreach from=$othomeslider.slides item=slide}
+                    <li class="slide">
+                      <img src="{$slide.image_url}" alt="{$slide.legend|escape}" />
+                      <p>
+                          New Offer 20% discount
+                      </p>
+                    </li>
+                  {/foreach}
+                </ul>
+              </div>
+            {/if}
+        </div>
+        <div class="col-md-4 col-xs-12">
+            <div class="slider-ads">
+                <img src="/img/slider/sldpi.png" class="offer" alt="offer">
+                <p>
+                    <img src="/img/slider/stars.png" alt="Agora Chegou">
+                    Receba as melhores ofertas e preços
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

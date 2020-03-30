@@ -25,7 +25,10 @@
 
 <section id="featured-products">
 <div class="featured-products container">
-  <h1 class="main-title">{l s='Featured Products' mod='otfeaturedproducts'}</h1>
+  <h1 class="main-title">
+      <span class="title">Produtos mais recentes</span>
+      <span class="line"></span>
+  </h1>
  <div class="homepage-products products">
     {if $sliderstatus == 1}
 		<ul id="featuredproducts-carousel" class="owl-carousel product-item grid products-slider">

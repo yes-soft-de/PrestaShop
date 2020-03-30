@@ -21,6 +21,7 @@ class FrontendHeader
 {
     /**
      * @return string
+     * @throws \Exception
      */
     public function buildHtml()
     {

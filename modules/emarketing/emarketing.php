@@ -29,7 +29,7 @@ class Emarketing extends Module
     {
         $this->name = 'emarketing';
         $this->tab = 'advertising_marketing';
-        $this->version = '2.0.7';
+        $this->version = '2.0.8';
         $this->author = 'emarketing';
         $this->module_key = 'f28d5933d349ca55af63ed0b10f6ca33';
         $this->need_instance = 0;
@@ -92,6 +92,7 @@ class Emarketing extends Module
 
     /**
      * @return string
+     * @throws Exception
      */
     public function hookDisplayHeader()
     {

@@ -25,6 +25,10 @@
 
 <div class="brandslider-outer">
 <div class="brandslider-inner container">
+    <h1 class="main-title">
+      <span class="title">Marcas</span>
+      <span class="line"></span>
+  </h1>
   <div class="brand-slidermain">
     {if $brands}
       {include file="module:otbrandlist/views/templates/_partials/$brand_display_type.tpl" brands=$brands}
